@@ -1,48 +1,166 @@
-<!-- Image Modal for Zoom and Carousel -->
-<div id="imageModal" class="modal">
-    <span class="modal-close" id="modalClose">&times;</span>
-    <span class="modal-nav modal-prev" id="modalPrev">&#10094;</span>
-    <span class="modal-nav modal-next" id="modalNext">&#10095;</span>
-    <div class="modal-content">
-        <img id="modalImage" src="" alt="Project Image">
-    </div>
-    <div class="modal-caption">
-        <span id="modalCounter">1 / 1</span>
-        <p id="modalDesc">Workout App Screenshot</p>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alan Luk | Portfolio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Alan<span>Luk</span></a>
+                <div class="menu-toggle" id="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#links">Links</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<!-- Updated Project Image Section -->
-<div class="project-card">
-    <!-- Carousel Container -->
-    <div class="project-img-carousel">
-        <div class="carousel-container">
-            <div class="carousel-slides">
-                <div class="carousel-slide active">
-                    <img src="/assets/images/workout.png" alt="Workout App Screenshot 1" class="carousel-image">
-                </div>
-                <!-- Add more slides if you have multiple images -->
-                <div class="carousel-slide">
-                    <img src="/assets/images/workout2.png" alt="Workout App Screenshot 2" class="carousel-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="/assets/images/workout3.png" alt="Workout App Screenshot 3" class="carousel-image">
-                </div>
-            </div>
-            <button class="carousel-prev">&#10094;</button>
-            <button class="carousel-next">&#10095;</button>
-            <div class="carousel-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Hi, I'm <span style="color: var(--primary);">Alan Luk</span></h1>
+            <p>I'm a passionate developer specializing in cloud applications and web development. Welcome to my portfolio where I showcase my projects and skills.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn">View My Work</a>
             </div>
         </div>
-        <button class="zoom-btn" title="Zoom Image">
-            <i class="fas fa-search-plus"></i>
-        </button>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2>My Projects</h2>
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <!-- Carousel Container -->
+                    <div class="project-img-carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-slides">
+                                <div class="carousel-slide active">
+                                    <img src="/assets/images/workout.png" alt="Workout App Screenshot 1" class="carousel-image">
+                                </div>
+                                <!-- Add more slides if you have multiple images -->
+                                <div class="carousel-slide">
+                                    <img src="/assets/images/workout2.png" alt="Workout App Screenshot 2" class="carousel-image">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="/assets/images/workout3.png" alt="Workout App Screenshot 3" class="carousel-image">
+                                </div>
+                            </div>
+                            <button class="carousel-prev">&#10094;</button>
+                            <button class="carousel-next">&#10095;</button>
+                            <div class="carousel-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <button class="zoom-btn" title="Zoom Image">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="project-info">
+                        <h3>Workout with courses enrollment</h3>
+                        <div class="project-tags">
+                            <span class="tag">Cloud</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Render</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">EJS</span>
+                            <span class="tag">JSON</span>
+                            <span class="tag">Kiro</span>
+                            <span class="tag">Javascript</span>
+                        </div>
+                        <p>A full-featured workout platform with user authentication, courses enrollment, 
+                            track workout with CRUD, fast workout setup for beginner and advanced, chat bot, 
+                            week and month analysis, weekly promotions. By using green as it psychologically represents growth, health, 
+                            and success—perfect for tracking fitness progress and motivating users toward their goals.
+                            Test account: test123456 password: 123456. There is an admin account for the admin to manage the courses, coaches, users. 
+                            Such as upload the new courses,  new coaches, change user password. As for the admin account, you can contact me to get it.</p>
+                        <a href="https://workhard-b5zs.onrender.com/" class="btn" target="_blank" style="margin-top: 10px; display: inline-block;">View on Render</a>
+                    </div>
+                </div>
+
+                <!-- Add more project cards here as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section -->
+    <section id="links">
+        <div class="container">
+            <h2>Connect With Me</h2>
+            <div class="links-container">
+                <a href="https://www.linkedin.com/in/alan-luk-ho-lung-803ba7302/" target="_blank" class="link-card">
+                    <div class="link-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <p>Connect with me professionally</p>
+                </a>
+                
+                <a href="https://github.com/alanluk2226" target="_blank" class="link-card">
+                    <div class="link-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>GitHub</h3>
+                    <p>View my code repositories</p>
+                </a>
+
+                <a href="mailto:alanluk2226@gmail.com" class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>Get in touch with me</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Alan<span style="color: var(--primary);">Luk</span></div>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#links">Links</a></li>
+                </ul>
+                <div class="copyright">
+                    <p>&copy; 2026 by Alan Luk. Launched by Render</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Modal for Zoom and Carousel -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <span class="modal-nav modal-prev" id="modalPrev">&#10094;</span>
+        <span class="modal-nav modal-next" id="modalNext">&#10095;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+        <div class="modal-caption">
+            <span id="modalCounter">1 / 1</span>
+            <p id="modalDesc">Workout App Screenshot</p>
+        </div>
     </div>
-    
-    <div class="project-info">
-        <!-- ... rest of project info remains the same ... -->
-    </div>
-</div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
