@@ -44,11 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let currentSlide = 0;
         
+        // Initialize the carousel - show first slide
+        function initCarousel() {
+            showSlide(0);
+        }
+        
         function showSlide(index) {
             if (index >= slideElements.length) index = 0;
             if (index < 0) index = slideElements.length - 1;
             
-            slides.style.transform = `translateX(-${index * 100}%)`;
+            // Calculate the transform based on 20% per slide
+            slides.style.transform = `translateX(-${index * 20}%)`;
             
             // Update dots
             dots.forEach((dot, i) => {
@@ -57,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             currentSlide = index;
         }
+        
+        // Initialize the carousel
+        initCarousel();
         
         // Event listeners for carousel buttons
         prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
@@ -77,6 +86,18 @@ document.addEventListener('DOMContentLoaded', function() {
         images.forEach((img, index) => {
             img.addEventListener('click', () => {
                 openModal(img.src, img.alt, index, images);
+            });
+            
+            // Add error handling for images
+            img.addEventListener('error', function() {
+                console.error('Failed to load image:', this.src);
+                this.style.backgroundColor = '#f0f0f0';
+                this.alt = 'Image failed to load';
+            });
+            
+            // Add load success handler
+            img.addEventListener('load', function() {
+                console.log('Image loaded successfully:', this.src);
             });
         });
     });
