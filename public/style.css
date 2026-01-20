@@ -319,13 +319,15 @@ footer {
     position: relative;
     height: 200px;
     overflow: hidden;
-    background: #000;
+    background: #f8f9fa; /* Light background instead of black */
+    border-radius: 10px 10px 0 0;
 }
 
 .carousel-container {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .carousel-slides {
@@ -336,7 +338,7 @@ footer {
 }
 
 .carousel-slide {
-    flex: 1;
+    flex: 0 0 20%; /* Each slide takes 20% of the container (100% / 5 slides) */
     height: 100%;
 }
 
@@ -345,6 +347,8 @@ footer {
     height: 100%;
     object-fit: cover;
     cursor: pointer;
+    display: block;
+    background-color: #f0f0f0; /* Fallback background */
 }
 
 .carousel-prev, .carousel-next {
