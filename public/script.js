@@ -102,10 +102,16 @@ document.addEventListener('DOMContentLoaded', function() {
         currentIndex = index;
         isZoomed = false;
         modalImg.classList.remove('zoomed');
+        modalImg.style.display = 'block'; // Ensure image is visible
         updateCounter();
         
         // Prevent body scrolling when modal is open
         document.body.style.overflow = 'hidden';
+        
+        // Ensure image loads properly
+        modalImg.onload = function() {
+            modalImg.style.display = 'block';
+        };
     }
     
     function closeModal() {
@@ -119,20 +125,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function showNextImage() {
         currentIndex = (currentIndex + 1) % currentImages.length;
-        modalImg.src = currentImages[currentIndex].src;
-        modalDesc.textContent = currentImages[currentIndex].alt;
+        const newImg = currentImages[currentIndex];
+        modalImg.src = newImg.src;
+        modalDesc.textContent = newImg.alt;
         isZoomed = false;
         modalImg.classList.remove('zoomed');
         updateCounter();
+        
+        // Ensure image loads properly
+        modalImg.onload = function() {
+            modalImg.style.display = 'block';
+        };
     }
     
     function showPrevImage() {
         currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-        modalImg.src = currentImages[currentIndex].src;
-        modalDesc.textContent = currentImages[currentIndex].alt;
+        const newImg = currentImages[currentIndex];
+        modalImg.src = newImg.src;
+        modalDesc.textContent = newImg.alt;
         isZoomed = false;
         modalImg.classList.remove('zoomed');
         updateCounter();
+        
+        // Ensure image loads properly
+        modalImg.onload = function() {
+            modalImg.style.display = 'block';
+        };
     }
     
     // Toggle zoom on image click
