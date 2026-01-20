@@ -46,6 +46,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize the carousel - show first slide
         function initCarousel() {
+            // Set the carousel slides container width based on number of slides
+            const totalSlides = slideElements.length;
+            slides.style.width = `${totalSlides * 100}%`;
+            
+            // Set each slide width
+            slideElements.forEach(slide => {
+                slide.style.width = `${100 / totalSlides}%`;
+            });
+            
             showSlide(0);
         }
         
@@ -53,8 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (index >= slideElements.length) index = 0;
             if (index < 0) index = slideElements.length - 1;
             
-            // Calculate the transform based on 20% per slide
-            slides.style.transform = `translateX(-${index * 20}%)`;
+            // Calculate the transform based on the number of slides in this specific carousel
+            const slideWidth = 100 / slideElements.length; // Dynamic width per slide
+            slides.style.transform = `translateX(-${index * slideWidth}%)`;
             
             // Update dots
             dots.forEach((dot, i) => {
