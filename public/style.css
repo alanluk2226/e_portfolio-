@@ -241,33 +241,43 @@ footer {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
+    min-height: 60px;
 }
 
 .footer-logo {
     font-size: 1.5rem;
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .footer-links {
     display: flex;
     list-style: none;
     gap: 2rem;
+    margin: 0;
+    padding: 0;
 }
 
 .footer-links a {
     color: var(--white);
     text-decoration: none;
     transition: color 0.3s;
+    white-space: nowrap;
 }
 
 .footer-links a:hover {
     color: var(--primary);
 }
 
+.copyright {
+    flex-shrink: 0;
+}
+
 .copyright p {
     color: var(--text-light);
     font-size: 0.9rem;
+    margin: 0;
 }
 
 /* Responsive Design */
@@ -311,6 +321,13 @@ footer {
     .footer-content {
         flex-direction: column;
         text-align: center;
+        gap: 1rem;
+    }
+    
+    .footer-links {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }
 
@@ -332,13 +349,13 @@ footer {
 
 .carousel-slides {
     display: flex;
-    width: 500%; /* 100% per slide for 5 slides */
     height: 100%;
     transition: transform 0.5s ease;
+    /* Width will be set dynamically by JavaScript */
 }
 
 .carousel-slide {
-    flex: 0 0 20%; /* Each slide takes 20% of the container (100% / 5 slides) */
+    flex: 0 0 auto; /* Width will be set dynamically by JavaScript */
     height: 100%;
 }
 
