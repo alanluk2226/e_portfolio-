@@ -6,8 +6,6 @@
     <title>Alan Luk | Portfolio</title>
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PDF.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
     <!-- Header & Navigation -->
@@ -196,14 +194,9 @@
                             </span>
                         </div>
                         <p>A comprehensive proposal for developing a prototype AI-driven phishing detection and mitigation assistant that focuses on email as the primary attack vector. The system parses incoming emails into structured features and analyzes them to produce a phishing risk score. Based on this assessment, intelligent agents decide whether to flag, quarantine, or allow messages, providing automated protection against phishing attacks while minimizing false positives.</p>
-                        <div class="project-buttons">
-                            <button class="btn preview-btn" onclick="openPdfPreview('/assets/documents/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf')" style="margin-top: 10px; margin-right: 10px;">
-                                <i class="fas fa-eye" style="margin-right: 5px;"></i>Preview Proposal
-                            </button>
-                            <a href="/pdf/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf" class="btn" target="_blank" style="margin-top: 10px; display: inline-block;">
-                                <i class="fas fa-file-pdf" style="margin-right: 5px;"></i>View Proposal (PDF)
-                            </a>
-                        </div>
+                        <a href="/assets/documents/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf" class="btn" target="_blank" style="margin-top: 10px; display: inline-block;">
+                            <i class="fas fa-file-pdf" style="margin-right: 5px;"></i>View Proposal (PDF)
+                        </a>
                         <div class="project-status">
                             <span class="status-badge">Proposal Stage</span>
                         </div>
@@ -275,52 +268,6 @@
         <div class="modal-caption">
             <span id="modalCounter">1 / 1</span>
             <p id="modalDesc">Workout App Screenshot</p>
-        </div>
-    </div>
-
-    <!-- PDF Preview Modal -->
-    <div id="pdfModal" class="modal">
-        <span class="modal-close" id="pdfModalClose">&times;</span>
-        <div class="pdf-modal-content">
-            <div class="pdf-modal-header">
-                <h3 id="pdfModalTitle">Document Preview</h3>
-                <div class="pdf-modal-controls">
-                    <button id="pdfPrevPage" class="pdf-control-btn" title="Previous Page">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <span id="pdfPageInfo">1 / 1</span>
-                    <button id="pdfNextPage" class="pdf-control-btn" title="Next Page">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <button id="pdfZoomOut" class="pdf-control-btn" title="Zoom Out">
-                        <i class="fas fa-search-minus"></i>
-                    </button>
-                    <span id="pdfZoomLevel">100%</span>
-                    <button id="pdfZoomIn" class="pdf-control-btn" title="Zoom In">
-                        <i class="fas fa-search-plus"></i>
-                    </button>
-                    <button id="pdfFullscreen" class="pdf-control-btn" title="Open in new tab">
-                        <i class="fas fa-external-link-alt"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="pdf-viewer-container">
-                <div id="pdfCanvasContainer" class="pdf-canvas-container">
-                    <canvas id="pdfCanvas"></canvas>
-                </div>
-                <div class="pdf-loading" id="pdfLoading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Loading PDF...</p>
-                </div>
-                <div class="pdf-error" id="pdfError" style="display: none;">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Unable to load PDF</p>
-                    <p style="font-size: 0.9rem; margin-top: 5px;">Click below to open the PDF in a new tab</p>
-                    <button class="btn" onclick="window.open('/assets/documents/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf', '_blank')" style="margin-top: 10px;">
-                        <i class="fas fa-external-link-alt" style="margin-right: 5px;"></i>Open PDF
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
