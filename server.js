@@ -3,8 +3,14 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+// ✅ Serve static files from 'public' directory with proper MIME types
+app.use(express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.pdf')) {
+            res.setHeader('Content-Type', 'application/pdf');
+        }
+    }
+}));
 
 // ✅ Route for debugging - check if CSS is being served
 app.get('/debug', (req, res) => {
@@ -40,8 +46,18 @@ app.get('/test-pdf', (req, res) => {
     });
 });
 
-// ✅ SPA fallback - only for HTML routes (not static files)
-app.get('/', (req, res) => {
+// ✅ Catch-all route for SPA - MUST be last
+app.get('*', (req, res) => {
+    // Don't redirect static file requests
+    if (req.path.startsWith('/assets/') || 
+        req.path.endsWith('.css') || 
+        req.path.endsWith('.js') || 
+        req.path.endsWith('.pdf') ||
+        req.path.endsWith('.png') ||
+        req.path.endsWith('.jpg') ||
+        req.path.endsWith('.svg')) {
+        return res.status(404).send('File not found');
+    }
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
