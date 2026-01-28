@@ -250,3 +250,83 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+// PDF Preview functionality
+function openPdfPreview(pdfUrl) {
+    const pdfModal = document.getElementById('pdfModal');
+    const pdfViewer = document.getElementById('pdfViewer');
+    const pdfLoading = document.getElementById('pdfLoading');
+    const pdfError = document.getElementById('pdfError');
+    const pdfModalTitle = document.getElementById('pdfModalTitle');
+    const pdfFullscreen = document.getElementById('pdfFullscreen');
+    
+    // Show modal and loading state
+    pdfModal.style.display = 'block';
+    pdfLoading.style.display = 'block';
+    pdfError.style.display = 'none';
+    pdfViewer.style.display = 'none';
+    
+    // Set title
+    const fileName = pdfUrl.split('/').pop().replace(/\.[^/.]+$/, "").replace(/_/g, ' ');
+    pdfModalTitle.textContent = fileName;
+    
+    // Prevent body scrolling
+    document.body.style.overflow = 'hidden';
+    
+    // Load PDF in iframe
+    pdfViewer.src = pdfUrl;
+    
+    // Handle iframe load
+    pdfViewer.onload = function() {
+        pdfLoading.style.display = 'none';
+        pdfViewer.style.display = 'block';
+    };
+    
+    // Handle iframe error
+    pdfViewer.onerror = function() {
+        pdfLoading.style.display = 'none';
+        pdfError.style.display = 'block';
+    };
+    
+    // Fallback timeout for loading
+    setTimeout(() => {
+        if (pdfLoading.style.display !== 'none') {
+            pdfLoading.style.display = 'none';
+            pdfViewer.style.display = 'block';
+        }
+    }, 3000);
+    
+    // Fullscreen button functionality
+    pdfFullscreen.onclick = function() {
+        window.open(pdfUrl, '_blank');
+    };
+}
+
+// PDF Modal close functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const pdfModal = document.getElementById('pdfModal');
+    const pdfModalClose = document.getElementById('pdfModalClose');
+    
+    function closePdfModal() {
+        pdfModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        // Clear iframe src to stop loading
+        document.getElementById('pdfViewer').src = '';
+    }
+    
+    // Close button
+    pdfModalClose.addEventListener('click', closePdfModal);
+    
+    // Close when clicking outside modal content
+    pdfModal.addEventListener('click', function(e) {
+        if (e.target === pdfModal) {
+            closePdfModal();
+        }
+    });
+    
+    // Keyboard close (Escape key)
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && pdfModal.style.display === 'block') {
+            closePdfModal();
+        }
+    });
+});
