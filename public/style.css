@@ -205,6 +205,11 @@ header {
     color: #76b900;
 }
 
+.logo-tag.hkstp {
+    border-color: #ea580c;
+    color: #1e3a8a;
+}
+
 .logo-tag.mongodb {
     border-color: #47a248;
     color: #47a248;
@@ -550,6 +555,7 @@ footer {
 .pdf-modal-controls {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .pdf-control-btn {
@@ -560,10 +566,42 @@ footer {
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s;
+    font-size: 0.9rem;
 }
 
 .pdf-control-btn:hover {
     background: #0056b3;
+}
+
+.pdf-control-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+#pdfPageInfo, #pdfZoomLevel {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    min-width: 60px;
+    text-align: center;
+}
+
+.pdf-canvas-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#pdfCanvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
 }
 
 .pdf-viewer-container {
@@ -715,10 +753,32 @@ footer {
     
     .pdf-modal-header {
         padding: 10px 15px;
+        flex-direction: column;
+        gap: 10px;
     }
     
     .pdf-modal-header h3 {
         font-size: 1rem;
+    }
+    
+    .pdf-modal-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .pdf-control-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+    
+    #pdfPageInfo, #pdfZoomLevel {
+        font-size: 0.8rem;
+        min-width: 50px;
+    }
+    
+    .pdf-canvas-container {
+        padding: 10px;
     }
     
     .project-buttons {
