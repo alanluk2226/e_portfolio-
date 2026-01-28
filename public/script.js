@@ -301,7 +301,14 @@ function openPdfPreview(pdfUrl) {
 }
 
 function loadPdfWithPdfJs(pdfUrl) {
-    const loadingTask = pdfjsLib.getDocument(pdfUrl);
+    // Add timestamp to prevent caching issues
+    const pdfUrlWithTimestamp = pdfUrl + '?t=' + Date.now();
+    
+    const loadingTask = pdfjsLib.getDocument({
+        url: pdfUrlWithTimestamp,
+        cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+        cMapPacked: true
+    });
     
     loadingTask.promise.then(function(pdf) {
         pdfDoc = pdf;
@@ -319,8 +326,51 @@ function loadPdfWithPdfJs(pdfUrl) {
         
     }).catch(function(error) {
         console.error('Error loading PDF:', error);
-        showPdfError();
+        
+        // Try alternative method - direct browser PDF viewer
+        tryDirectPdfViewer(pdfUrl);
     });
+}
+
+function tryDirectPdfViewer(pdfUrl) {
+    console.log('Trying direct PDF viewer...');
+    
+    // Hide canvas container and show iframe fallback
+    document.getElementById('pdfCanvasContainer').style.display = 'none';
+    document.getElementById('pdfLoading').style.display = 'none';
+    
+    // Create iframe fallback
+    let iframeContainer = document.getElementById('pdfIframeContainer');
+    if (!iframeContainer) {
+        iframeContainer = document.createElement('div');
+        iframeContainer.id = 'pdfIframeContainer';
+        iframeContainer.style.cssText = 'width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;';
+        
+        const iframe = document.createElement('iframe');
+        iframe.src = pdfUrl + '#toolbar=0&navpanes=0&scrollbar=1';
+        iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
+        
+        iframe.onload = function() {
+            console.log('PDF loaded in iframe');
+        };
+        
+        iframe.onerror = function() {
+            console.log('Iframe failed, showing error');
+            showPdfError();
+        };
+        
+        iframeContainer.appendChild(iframe);
+        document.querySelector('.pdf-viewer-container').appendChild(iframeContainer);
+    }
+    
+    iframeContainer.style.display = 'flex';
+    
+    // If iframe doesn't load in 5 seconds, show error
+    setTimeout(() => {
+        if (iframeContainer.style.display !== 'none') {
+            showPdfError();
+        }
+    }, 5000);
 }
 
 function renderPage(num) {
@@ -468,6 +518,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
+        
+        // Remove iframe fallback if it exists
+        const iframeContainer = document.getElementById('pdfIframeContainer');
+        if (iframeContainer) {
+            iframeContainer.remove();
+        }
+        
+        // Reset display states
+        document.getElementById('pdfLoading').style.display = 'block';
+        document.getElementById('pdfError').style.display = 'none';
+        document.getElementById('pdfCanvasContainer').style.display = 'none';
     }
     
     // Close button
