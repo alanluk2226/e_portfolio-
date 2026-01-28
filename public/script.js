@@ -250,20 +250,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-// PDF Preview functionality
+// PDF.js Preview functionality
+let pdfDoc = null;
+let pageNum = 1;
+let pageRendering = false;
+let pageNumPending = null;
+let scale = 1.2;
+let canvas = null;
+let ctx = null;
+
+// Initialize PDF.js
+if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
 function openPdfPreview(pdfUrl) {
     const pdfModal = document.getElementById('pdfModal');
-    const pdfViewer = document.getElementById('pdfViewer');
     const pdfLoading = document.getElementById('pdfLoading');
     const pdfError = document.getElementById('pdfError');
     const pdfModalTitle = document.getElementById('pdfModalTitle');
-    const pdfFullscreen = document.getElementById('pdfFullscreen');
+    const pdfCanvasContainer = document.getElementById('pdfCanvasContainer');
     
     // Show modal and loading state
     pdfModal.style.display = 'block';
     pdfLoading.style.display = 'block';
     pdfError.style.display = 'none';
-    pdfViewer.style.display = 'none';
+    pdfCanvasContainer.style.display = 'none';
+    
+    // Reset state
+    pageNum = 1;
+    scale = 1.2;
     
     // Set title
     const fileName = pdfUrl.split('/').pop().replace(/\.[^/.]+$/, "").replace(/_/g, ' ');
@@ -272,33 +288,164 @@ function openPdfPreview(pdfUrl) {
     // Prevent body scrolling
     document.body.style.overflow = 'hidden';
     
-    // Load PDF in iframe
-    pdfViewer.src = pdfUrl;
+    // Get canvas and context
+    canvas = document.getElementById('pdfCanvas');
+    ctx = canvas.getContext('2d');
     
-    // Handle iframe load
-    pdfViewer.onload = function() {
-        pdfLoading.style.display = 'none';
-        pdfViewer.style.display = 'block';
-    };
+    // Load PDF
+    if (typeof pdfjsLib !== 'undefined') {
+        loadPdfWithPdfJs(pdfUrl);
+    } else {
+        showPdfError();
+    }
+}
+
+function loadPdfWithPdfJs(pdfUrl) {
+    const loadingTask = pdfjsLib.getDocument(pdfUrl);
     
-    // Handle iframe error
-    pdfViewer.onerror = function() {
-        pdfLoading.style.display = 'none';
-        pdfError.style.display = 'block';
-    };
+    loadingTask.promise.then(function(pdf) {
+        pdfDoc = pdf;
+        document.getElementById('pdfLoading').style.display = 'none';
+        document.getElementById('pdfCanvasContainer').style.display = 'flex';
+        
+        // Update page info
+        updatePageInfo();
+        
+        // Render first page
+        renderPage(pageNum);
+        
+        // Setup controls
+        setupPdfControls();
+        
+    }).catch(function(error) {
+        console.error('Error loading PDF:', error);
+        showPdfError();
+    });
+}
+
+function renderPage(num) {
+    if (!pdfDoc) return;
     
-    // Fallback timeout for loading
-    setTimeout(() => {
-        if (pdfLoading.style.display !== 'none') {
-            pdfLoading.style.display = 'none';
-            pdfViewer.style.display = 'block';
-        }
-    }, 3000);
+    pageRendering = true;
     
-    // Fullscreen button functionality
-    pdfFullscreen.onclick = function() {
-        window.open(pdfUrl, '_blank');
-    };
+    // Get page
+    pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Render PDF page into canvas context
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        
+        const renderTask = page.render(renderContext);
+        
+        renderTask.promise.then(function() {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+                // New page rendering is pending
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+    
+    // Update page counters
+    updatePageInfo();
+}
+
+function queueRenderPage(num) {
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+}
+
+function onPrevPage() {
+    if (pageNum <= 1) {
+        return;
+    }
+    pageNum--;
+    queueRenderPage(pageNum);
+}
+
+function onNextPage() {
+    if (pageNum >= pdfDoc.numPages) {
+        return;
+    }
+    pageNum++;
+    queueRenderPage(pageNum);
+}
+
+function onZoomIn() {
+    scale += 0.2;
+    queueRenderPage(pageNum);
+    updateZoomInfo();
+}
+
+function onZoomOut() {
+    if (scale <= 0.4) return;
+    scale -= 0.2;
+    queueRenderPage(pageNum);
+    updateZoomInfo();
+}
+
+function updatePageInfo() {
+    if (!pdfDoc) return;
+    document.getElementById('pdfPageInfo').textContent = `${pageNum} / ${pdfDoc.numPages}`;
+    
+    // Update button states
+    const prevBtn = document.getElementById('pdfPrevPage');
+    const nextBtn = document.getElementById('pdfNextPage');
+    
+    prevBtn.disabled = pageNum <= 1;
+    nextBtn.disabled = pageNum >= pdfDoc.numPages;
+}
+
+function updateZoomInfo() {
+    document.getElementById('pdfZoomLevel').textContent = `${Math.round(scale * 100)}%`;
+}
+
+function setupPdfControls() {
+    const prevBtn = document.getElementById('pdfPrevPage');
+    const nextBtn = document.getElementById('pdfNextPage');
+    const zoomInBtn = document.getElementById('pdfZoomIn');
+    const zoomOutBtn = document.getElementById('pdfZoomOut');
+    const fullscreenBtn = document.getElementById('pdfFullscreen');
+    
+    // Remove existing listeners
+    prevBtn.replaceWith(prevBtn.cloneNode(true));
+    nextBtn.replaceWith(nextBtn.cloneNode(true));
+    zoomInBtn.replaceWith(zoomInBtn.cloneNode(true));
+    zoomOutBtn.replaceWith(zoomOutBtn.cloneNode(true));
+    fullscreenBtn.replaceWith(fullscreenBtn.cloneNode(true));
+    
+    // Get new references
+    const newPrevBtn = document.getElementById('pdfPrevPage');
+    const newNextBtn = document.getElementById('pdfNextPage');
+    const newZoomInBtn = document.getElementById('pdfZoomIn');
+    const newZoomOutBtn = document.getElementById('pdfZoomOut');
+    const newFullscreenBtn = document.getElementById('pdfFullscreen');
+    
+    // Add new listeners
+    newPrevBtn.addEventListener('click', onPrevPage);
+    newNextBtn.addEventListener('click', onNextPage);
+    newZoomInBtn.addEventListener('click', onZoomIn);
+    newZoomOutBtn.addEventListener('click', onZoomOut);
+    newFullscreenBtn.addEventListener('click', function() {
+        window.open('/assets/documents/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf', '_blank');
+    });
+    
+    updateZoomInfo();
+}
+
+function showPdfError() {
+    document.getElementById('pdfLoading').style.display = 'none';
+    document.getElementById('pdfError').style.display = 'block';
+    document.getElementById('pdfCanvasContainer').style.display = 'none';
 }
 
 // PDF Modal close functionality
@@ -309,12 +456,24 @@ document.addEventListener('DOMContentLoaded', function() {
     function closePdfModal() {
         pdfModal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        // Clear iframe src to stop loading
-        document.getElementById('pdfViewer').src = '';
+        
+        // Reset PDF state
+        pdfDoc = null;
+        pageNum = 1;
+        scale = 1.2;
+        
+        // Clear canvas
+        const canvas = document.getElementById('pdfCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
     }
     
     // Close button
-    pdfModalClose.addEventListener('click', closePdfModal);
+    if (pdfModalClose) {
+        pdfModalClose.addEventListener('click', closePdfModal);
+    }
     
     // Close when clicking outside modal content
     pdfModal.addEventListener('click', function(e) {
@@ -323,10 +482,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Keyboard close (Escape key)
+    // Keyboard controls
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && pdfModal.style.display === 'block') {
-            closePdfModal();
+        if (pdfModal.style.display === 'block') {
+            switch(e.key) {
+                case 'Escape':
+                    closePdfModal();
+                    break;
+                case 'ArrowLeft':
+                    if (pdfDoc) onPrevPage();
+                    break;
+                case 'ArrowRight':
+                    if (pdfDoc) onNextPage();
+                    break;
+                case '+':
+                case '=':
+                    if (pdfDoc) onZoomIn();
+                    break;
+                case '-':
+                    if (pdfDoc) onZoomOut();
+                    break;
+            }
         }
     });
 });
