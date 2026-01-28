@@ -37,14 +37,39 @@ app.get('/view-css', (req, res) => {
 // ✅ Test PDF endpoint
 app.get('/test-pdf', (req, res) => {
     const pdfPath = path.join(__dirname, 'public', 'assets', 'documents', 'Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf');
+    const fs = require('fs');
+    
     res.json({
         pdfPath: pdfPath,
-        pdfExists: require('fs').existsSync(pdfPath),
+        pdfExists: fs.existsSync(pdfPath),
+        pdfSize: fs.existsSync(pdfPath) ? fs.statSync(pdfPath).size : 'N/A',
         documentsDir: path.join(__dirname, 'public', 'assets', 'documents'),
-        filesInDocuments: require('fs').existsSync(path.join(__dirname, 'public', 'assets', 'documents')) 
-            ? require('fs').readdirSync(path.join(__dirname, 'public', 'assets', 'documents'))
-            : 'Directory does not exist'
+        filesInDocuments: fs.existsSync(path.join(__dirname, 'public', 'assets', 'documents')) 
+            ? fs.readdirSync(path.join(__dirname, 'public', 'assets', 'documents'))
+            : 'Directory does not exist',
+        publicDir: path.join(__dirname, 'public'),
+        assetsDir: path.join(__dirname, 'public', 'assets')
     });
+});
+
+// ✅ Direct PDF serving route as backup
+app.get('/pdf/:filename', (req, res) => {
+    const filename = req.params.filename;
+    const pdfPath = path.join(__dirname, 'public', 'assets', 'documents', filename);
+    const fs = require('fs');
+    
+    if (fs.existsSync(pdfPath)) {
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'inline');
+        res.sendFile(pdfPath);
+    } else {
+        res.status(404).json({
+            error: 'PDF not found',
+            requestedFile: filename,
+            searchPath: pdfPath,
+            exists: false
+        });
+    }
 });
 
 app.listen(PORT, () => {
