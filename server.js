@@ -27,8 +27,21 @@ app.get('/view-css', (req, res) => {
     }
 });
 
-// ✅ All routes go to index.html
-app.get('*', (req, res) => {
+// ✅ Test PDF endpoint
+app.get('/test-pdf', (req, res) => {
+    const pdfPath = path.join(__dirname, 'public', 'assets', 'documents', 'Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf');
+    res.json({
+        pdfPath: pdfPath,
+        pdfExists: require('fs').existsSync(pdfPath),
+        documentsDir: path.join(__dirname, 'public', 'assets', 'documents'),
+        filesInDocuments: require('fs').existsSync(path.join(__dirname, 'public', 'assets', 'documents')) 
+            ? require('fs').readdirSync(path.join(__dirname, 'public', 'assets', 'documents'))
+            : 'Directory does not exist'
+    });
+});
+
+// ✅ SPA fallback - only for HTML routes (not static files)
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
