@@ -292,15 +292,38 @@ function openPdfPreview(pdfUrl) {
     canvas = document.getElementById('pdfCanvas');
     ctx = canvas.getContext('2d');
     
-    // Load PDF
-    if (typeof pdfjsLib !== 'undefined') {
-        loadPdfWithPdfJs(pdfUrl);
-    } else {
+    // Try multiple PDF URLs
+    const pdfUrls = [
+        pdfUrl,
+        '/pdf/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf'
+    ];
+    
+    tryLoadPdf(pdfUrls, 0);
+}
+
+function tryLoadPdf(urls, index) {
+    if (index >= urls.length) {
         showPdfError();
+        return;
+    }
+    
+    const currentUrl = urls[index];
+    console.log(`Trying to load PDF from: ${currentUrl}`);
+    
+    if (typeof pdfjsLib !== 'undefined') {
+        loadPdfWithPdfJs(currentUrl, () => {
+            // On failure, try next URL
+            tryLoadPdf(urls, index + 1);
+        });
+    } else {
+        tryDirectPdfViewer(currentUrl, () => {
+            // On failure, try next URL
+            tryLoadPdf(urls, index + 1);
+        });
     }
 }
 
-function loadPdfWithPdfJs(pdfUrl) {
+function loadPdfWithPdfJs(pdfUrl, onFailure) {
     // Add timestamp to prevent caching issues
     const pdfUrlWithTimestamp = pdfUrl + '?t=' + Date.now();
     
@@ -327,8 +350,12 @@ function loadPdfWithPdfJs(pdfUrl) {
     }).catch(function(error) {
         console.error('Error loading PDF:', error);
         
-        // Try alternative method - direct browser PDF viewer
-        tryDirectPdfViewer(pdfUrl);
+        if (onFailure) {
+            onFailure();
+        } else {
+            // Try alternative method - direct browser PDF viewer
+            tryDirectPdfViewer(pdfUrl);
+        }
     });
 }
 
