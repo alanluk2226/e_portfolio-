@@ -3,15 +3,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Serve static files from 'public' directory with proper MIME types
-app.use(express.static(path.join(__dirname, 'public'), {
-    setHeaders: (res, path) => {
-        if (path.endsWith('.pdf')) {
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'inline');
-        }
-    }
-}));
+// ✅ Serve static files from 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ✅ Route for debugging - check if CSS is being served
 app.get('/debug', (req, res) => {
@@ -22,16 +15,6 @@ app.get('/debug', (req, res) => {
         currentDir: __dirname,
         filesInPublic: require('fs').readdirSync(path.join(__dirname, 'public'))
     });
-});
-
-// ✅ Route to directly view CSS
-app.get('/view-css', (req, res) => {
-    const cssPath = path.join(__dirname, 'public', 'style.css');
-    if (require('fs').existsSync(cssPath)) {
-        res.type('css').sendFile(cssPath);
-    } else {
-        res.status(404).send('CSS file not found at: ' + cssPath);
-    }
 });
 
 // ✅ Test PDF endpoint
@@ -46,30 +29,8 @@ app.get('/test-pdf', (req, res) => {
         documentsDir: path.join(__dirname, 'public', 'assets', 'documents'),
         filesInDocuments: fs.existsSync(path.join(__dirname, 'public', 'assets', 'documents')) 
             ? fs.readdirSync(path.join(__dirname, 'public', 'assets', 'documents'))
-            : 'Directory does not exist',
-        publicDir: path.join(__dirname, 'public'),
-        assetsDir: path.join(__dirname, 'public', 'assets')
+            : 'Directory does not exist'
     });
-});
-
-// ✅ Direct PDF serving route as backup
-app.get('/pdf/:filename', (req, res) => {
-    const filename = req.params.filename;
-    const pdfPath = path.join(__dirname, 'public', 'assets', 'documents', filename);
-    const fs = require('fs');
-    
-    if (fs.existsSync(pdfPath)) {
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'inline');
-        res.sendFile(pdfPath);
-    } else {
-        res.status(404).json({
-            error: 'PDF not found',
-            requestedFile: filename,
-            searchPath: pdfPath,
-            exists: false
-        });
-    }
 });
 
 app.listen(PORT, () => {
