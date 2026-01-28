@@ -8,6 +8,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
     setHeaders: (res, path) => {
         if (path.endsWith('.pdf')) {
             res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', 'inline');
         }
     }
 }));
@@ -44,21 +45,6 @@ app.get('/test-pdf', (req, res) => {
             ? require('fs').readdirSync(path.join(__dirname, 'public', 'assets', 'documents'))
             : 'Directory does not exist'
     });
-});
-
-// ✅ Catch-all route for SPA - MUST be last
-app.get('*', (req, res) => {
-    // Don't redirect static file requests
-    if (req.path.startsWith('/assets/') || 
-        req.path.endsWith('.css') || 
-        req.path.endsWith('.js') || 
-        req.path.endsWith('.pdf') ||
-        req.path.endsWith('.png') ||
-        req.path.endsWith('.jpg') ||
-        req.path.endsWith('.svg')) {
-        return res.status(404).send('File not found');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
