@@ -112,6 +112,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Handle single images (non-carousel)
+    const singleImages = document.querySelectorAll('.single-image-container');
+    
+    singleImages.forEach(container => {
+        const image = container.querySelector('.project-image');
+        const zoomBtn = container.closest('.project-img-carousel').querySelector('.zoom-btn');
+        
+        if (image && zoomBtn) {
+            // Zoom functionality for single image
+            zoomBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(image.src, image.alt, 0, [image]);
+            });
+            
+            // Click on image to zoom
+            image.addEventListener('click', () => {
+                openModal(image.src, image.alt, 0, [image]);
+            });
+            
+            // Add error handling for images
+            image.addEventListener('error', function() {
+                console.error('Failed to load image:', this.src);
+                this.style.backgroundColor = '#f0f0f0';
+                this.alt = 'Image failed to load';
+            });
+            
+            // Add load success handler
+            image.addEventListener('load', function() {
+                console.log('Image loaded successfully:', this.src);
+            });
+        }
+    });
+    
     // Modal functionality
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
