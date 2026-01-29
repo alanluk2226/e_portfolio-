@@ -186,13 +186,6 @@ header {
     border-radius: 15px;
     font-size: 0.8rem;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.tag i {
-    font-size: 0.9rem;
 }
 
 .project-info p {
