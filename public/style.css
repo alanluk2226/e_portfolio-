@@ -119,20 +119,29 @@ header {
 }
 
 /* Projects Section */
-.projects, .other-projects {
+.projects {
     padding: 80px 0;
     background: var(--light);
 }
 
-.projects h2, .other-projects h2 {
+.projects h2 {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
     color: var(--text-dark);
 }
 
+/* Other Projects Section */
 .other-projects {
+    padding: 80px 0;
     background: var(--white);
+}
+
+.other-projects h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-dark);
 }
 
 .project-grid {
@@ -168,7 +177,6 @@ header {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    align-items: center;
 }
 
 .tag {
@@ -180,74 +188,15 @@ header {
     font-weight: 500;
 }
 
-.logo-tag {
-    background: var(--white);
-    border: 2px solid #e0e0e0;
-    padding: 0.2rem 0.5rem;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.logo-tag img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-}
-
-.logo-tag.nvidia {
-    border-color: #76b900;
-    color: #76b900;
-}
-
-.logo-tag.hkstp {
-    border-color: #ea580c;
-    color: #1e3a8a;
-}
-
-.logo-tag.mongodb {
-    border-color: #47a248;
-    color: #47a248;
-}
-
-.logo-tag.nodejs {
-    border-color: #339933;
-    color: #339933;
-}
-
-.logo-tag.github {
-    border-color: #333;
-    color: #333;
-}
-
 .project-info p {
     color: var(--text-light);
     line-height: 1.6;
 }
 
-.project-status {
-    margin-top: 1rem;
-}
-
-.status-badge {
-    background: #28a745;
-    color: var(--white);
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: inline-block;
-}
-
 /* Links Section */
 #links {
     padding: 80px 0;
-    background: var(--white);
+    background: var(--light);
 }
 
 #links h2 {
@@ -523,134 +472,6 @@ footer {
     overflow: hidden;
 }
 
-/* PDF Modal Styles */
-.pdf-modal-content {
-    position: relative;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1000px;
-    height: calc(100vh - 40px);
-    background: white;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-}
-
-.pdf-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #e0e0e0;
-    background: #f8f9fa;
-    border-radius: 8px 8px 0 0;
-}
-
-.pdf-modal-header h3 {
-    margin: 0;
-    color: var(--text-dark);
-    font-size: 1.2rem;
-}
-
-.pdf-modal-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.pdf-control-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-    font-size: 0.9rem;
-}
-
-.pdf-control-btn:hover {
-    background: #0056b3;
-}
-
-.pdf-control-btn:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
-}
-
-#pdfPageInfo, #pdfZoomLevel {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    min-width: 60px;
-    text-align: center;
-}
-
-.pdf-canvas-container {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-#pdfCanvas {
-    max-width: 100%;
-    height: auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 4px;
-}
-
-.pdf-viewer-container {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-#pdfViewer {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.pdf-loading, .pdf-error {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: var(--text-light);
-}
-
-.pdf-loading i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: var(--primary);
-}
-
-.pdf-error i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: #dc3545;
-}
-
-.project-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.preview-btn {
-    background: #28a745;
-}
-
-.preview-btn:hover {
-    background: #218838;
-}
-
 .modal-content {
     position: relative;
     margin: auto;
@@ -743,50 +564,5 @@ footer {
     .modal-close {
         font-size: 30px;
         right: 15px;
-    }
-    
-    .pdf-modal-content {
-        width: 95%;
-        margin: 10px auto;
-        height: calc(100vh - 20px);
-    }
-    
-    .pdf-modal-header {
-        padding: 10px 15px;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .pdf-modal-header h3 {
-        font-size: 1rem;
-    }
-    
-    .pdf-modal-controls {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-    }
-    
-    .pdf-control-btn {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-    }
-    
-    #pdfPageInfo, #pdfZoomLevel {
-        font-size: 0.8rem;
-        min-width: 50px;
-    }
-    
-    .pdf-canvas-container {
-        padding: 10px;
-    }
-    
-    .project-buttons {
-        flex-direction: column;
-    }
-    
-    .project-buttons .btn {
-        width: 100%;
-        text-align: center;
     }
 }
