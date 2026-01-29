@@ -6,18 +6,29 @@ const PORT = process.env.PORT || 3000;
 // ✅ Serve static files from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Route for debugging
+// ✅ Route for debugging - check if CSS is being served
 app.get('/debug', (req, res) => {
     res.json({
         message: 'Debug endpoint',
+        cssPath: path.join(__dirname, 'public', 'style.css'),
+        cssExists: require('fs').existsSync(path.join(__dirname, 'public', 'style.css')),
         currentDir: __dirname,
-        publicDir: path.join(__dirname, 'public'),
         filesInPublic: require('fs').readdirSync(path.join(__dirname, 'public'))
     });
 });
 
-// ✅ Serve index.html for the root route
-app.get('/', (req, res) => {
+// ✅ Route to directly view CSS
+app.get('/view-css', (req, res) => {
+    const cssPath = path.join(__dirname, 'public', 'style.css');
+    if (require('fs').existsSync(cssPath)) {
+        res.type('css').sendFile(cssPath);
+    } else {
+        res.status(404).send('CSS file not found at: ' + cssPath);
+    }
+});
+
+// ✅ All routes go to index.html
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
