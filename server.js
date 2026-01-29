@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Serve static files from 'public' directory FIRST
+// ✅ Serve static files from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ✅ Route for debugging - check if CSS is being served
@@ -38,18 +38,33 @@ app.get('/test-pdf', (req, res) => {
     }
 });
 
-// ✅ Only redirect HTML routes to index.html, not static files
-app.get('*', (req, res) => {
-    // Don't redirect requests for static files (assets, documents, etc.)
-    if (req.path.startsWith('/assets/') || 
-        req.path.startsWith('/style.css') || 
-        req.path.startsWith('/script.js') ||
-        req.path.includes('.')) {
-        // Let express.static handle these files
-        return res.status(404).send('File not found');
-    }
+// ✅ Direct PDF route
+app.get('/assets/documents/Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf', (req, res) => {
+    const pdfPath = path.join(__dirname, 'public', 'assets', 'documents', 'Luk_Ho_Lung_NVIDIA_Project_Proposal.pdf');
+    console.log('PDF requested, checking path:', pdfPath);
+    console.log('File exists:', require('fs').existsSync(pdfPath));
     
-    // Only redirect HTML page requests to index.html
+    if (require('fs').existsSync(pdfPath)) {
+        res.type('application/pdf');
+        res.sendFile(pdfPath);
+    } else {
+        // List what files ARE in the documents directory
+        const documentsDir = path.join(__dirname, 'public', 'assets', 'documents');
+        let fileList = 'Directory does not exist';
+        try {
+            if (require('fs').existsSync(documentsDir)) {
+                fileList = require('fs').readdirSync(documentsDir).join(', ');
+            }
+        } catch (e) {
+            fileList = 'Error reading directory: ' + e.message;
+        }
+        
+        res.status(404).send(`PDF file not found. Files in documents directory: ${fileList}`);
+    }
+});
+
+// ✅ Catch-all handler: send back React's index.html file for SPA routing
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
