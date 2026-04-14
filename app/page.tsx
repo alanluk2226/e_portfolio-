@@ -1,9 +1,10 @@
 'use client'
 import Navbar from './components/Navbar'
-import ProjectCard from './components/ProjectCard'
+import ProjectSlider from './components/ProjectSlider'
 import ScrollReveal from './components/ScrollReveal'
 import TypeWriter from './components/TypeWriter'
 import CursorGlow from './components/CursorGlow'
+import ProjectCard from './components/ProjectCard'
 import { myProjects, otherProjects, certificates } from './data'
 
 export default function Home() {
@@ -95,13 +96,9 @@ export default function Home() {
             <h2 className="section-title">My <span>Projects</span></h2>
             <div className="section-line" />
           </div>
-          <div className="project-grid">
-            {myProjects.map((p, i) => (
-              <ScrollReveal key={p.title} delay={i * 120}>
-                <ProjectCard {...p} />
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal>
+            <ProjectSlider projects={myProjects} />
+          </ScrollReveal>
         </div>
       </section>
 
@@ -132,8 +129,7 @@ export default function Home() {
                 <ProjectCard {...c} />
               </ScrollReveal>
             ))}
-          </div>
-        </div>
+          </div>        </div>
       </section>
 
       <div className="sky-divider" />

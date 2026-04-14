@@ -304,6 +304,88 @@ body {
   margin: 70px 0 40px;
 }
 
+/* ─── PROJECT SLIDER ─── */
+.project-slider {
+  --card-w: 380px;
+  --card-gap: 24px;
+  position: relative;
+  overflow: hidden;
+  padding: 8px 0 48px;
+}
+.project-slider-track {
+  display: flex;
+  gap: var(--card-gap);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.project-slider-item {
+  flex: 0 0 var(--card-w);
+  width: var(--card-w);
+  /* equal height cards */
+  display: flex;
+  flex-direction: column;
+}
+.project-slider-item .project-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.project-slider-item .project-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.project-slider-item .card-links {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 110px;
+  background: rgba(10,22,40,0.8);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: background 0.2s, transform 0.2s;
+}
+.slider-btn:hover { background: var(--accent); transform: scale(1.1); }
+.slider-btn-prev { left: 0; }
+.slider-btn-next { right: 0; }
+
+.slider-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.slider-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+/* inside slider, hide the per-card carousel nav arrows and zoom btn */
+.project-slider-item .carousel-prev,
+.project-slider-item .carousel-next,
+.project-slider-item .zoom-btn { display: none; }
+
+@media (max-width: 480px) {
+  .project-slider { --card-w: calc(100vw - 48px); }
+  .slider-btn-prev { left: 0; }
+  .slider-btn-next { right: 0; }
+}
+
 /* ─── PROJECT GRID ─── */
 .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 28px; }
 
