@@ -1,0 +1,285 @@
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    
+    mobileMenu.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+            navLinks.classList.remove('active');
+        }
+    });
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+
+// Carousel functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const carousels = document.querySelectorAll('.carousel-container');
+    
+    carousels.forEach(carousel => {
+        const slides = carousel.querySelector('.carousel-slides');
+        const slideElements = carousel.querySelectorAll('.carousel-slide');
+        const prevBtn = carousel.querySelector('.carousel-prev');
+        const nextBtn = carousel.querySelector('.carousel-next');
+        const dots = carousel.querySelectorAll('.dot');
+        const zoomBtn = carousel.closest('.project-img-carousel').querySelector('.zoom-btn');
+        const images = carousel.querySelectorAll('.carousel-image');
+        
+        let currentSlide = 0;
+        
+        // Initialize the carousel - show first slide
+        function initCarousel() {
+            // Set the carousel slides container width based on number of slides
+            const totalSlides = slideElements.length;
+            slides.style.width = `${totalSlides * 100}%`;
+            
+            // Set each slide width
+            slideElements.forEach(slide => {
+                slide.style.width = `${100 / totalSlides}%`;
+            });
+            
+            showSlide(0);
+        }
+        
+        function showSlide(index) {
+            if (index >= slideElements.length) index = 0;
+            if (index < 0) index = slideElements.length - 1;
+            
+            // Calculate the transform based on the number of slides in this specific carousel
+            const slideWidth = 100 / slideElements.length; // Dynamic width per slide
+            slides.style.transform = `translateX(-${index * slideWidth}%)`;
+            
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            currentSlide = index;
+        }
+        
+        // Initialize the carousel
+        initCarousel();
+        
+        // Event listeners for carousel buttons
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+        
+        // Event listeners for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+        
+        // Zoom functionality for carousel
+        zoomBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openModal(images[currentSlide].src, images[currentSlide].alt, currentSlide, images);
+        });
+        
+        // Click on image to zoom
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                openModal(img.src, img.alt, index, images);
+            });
+            
+            // Add error handling for images
+            img.addEventListener('error', function() {
+                console.error('Failed to load image:', this.src);
+                this.style.backgroundColor = '#f0f0f0';
+                this.alt = 'Image failed to load';
+            });
+            
+            // Add load success handler
+            img.addEventListener('load', function() {
+                console.log('Image loaded successfully:', this.src);
+            });
+        });
+    });
+    
+    // Handle single images (non-carousel)
+    const singleImages = document.querySelectorAll('.single-image-container');
+    
+    singleImages.forEach(container => {
+        const image = container.querySelector('.project-image');
+        const zoomBtn = container.closest('.project-img-carousel').querySelector('.zoom-btn');
+        
+        if (image && zoomBtn) {
+            // Zoom functionality for single image
+            zoomBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(image.src, image.alt, 0, [image]);
+            });
+            
+            // Click on image to zoom
+            image.addEventListener('click', () => {
+                openModal(image.src, image.alt, 0, [image]);
+            });
+            
+            // Add error handling for images
+            image.addEventListener('error', function() {
+                console.error('Failed to load image:', this.src);
+                this.style.backgroundColor = '#f0f0f0';
+                this.alt = 'Image failed to load';
+            });
+            
+            // Add load success handler
+            image.addEventListener('load', function() {
+                console.log('Image loaded successfully:', this.src);
+            });
+        }
+    });
+    
+    // Modal functionality
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+    const modalPrev = document.getElementById('modalPrev');
+    const modalNext = document.getElementById('modalNext');
+    const modalCounter = document.getElementById('modalCounter');
+    const modalDesc = document.getElementById('modalDesc');
+    
+    let currentImages = [];
+    let currentIndex = 0;
+    let isZoomed = false;
+    
+    function openModal(imgSrc, imgAlt, index, images) {
+        modal.style.display = 'block';
+        modalImg.src = imgSrc;
+        modalDesc.textContent = imgAlt;
+        currentImages = Array.from(images);
+        currentIndex = index;
+        isZoomed = false;
+        modalImg.classList.remove('zoomed');
+        modalImg.style.display = 'block'; // Ensure image is visible
+        updateCounter();
+        
+        // Prevent body scrolling when modal is open
+        document.body.style.overflow = 'hidden';
+        
+        // Ensure image loads properly
+        modalImg.onload = function() {
+            modalImg.style.display = 'block';
+        };
+    }
+    
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    function updateCounter() {
+        modalCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+    }
+    
+    function showNextImage() {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        const newImg = currentImages[currentIndex];
+        modalImg.src = newImg.src;
+        modalDesc.textContent = newImg.alt;
+        isZoomed = false;
+        modalImg.classList.remove('zoomed');
+        updateCounter();
+        
+        // Ensure image loads properly
+        modalImg.onload = function() {
+            modalImg.style.display = 'block';
+        };
+    }
+    
+    function showPrevImage() {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        const newImg = currentImages[currentIndex];
+        modalImg.src = newImg.src;
+        modalDesc.textContent = newImg.alt;
+        isZoomed = false;
+        modalImg.classList.remove('zoomed');
+        updateCounter();
+        
+        // Ensure image loads properly
+        modalImg.onload = function() {
+            modalImg.style.display = 'block';
+        };
+    }
+    
+    // Toggle zoom on image click
+    modalImg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isZoomed = !isZoomed;
+        modalImg.classList.toggle('zoomed', isZoomed);
+    });
+    
+    // Event listeners
+    modalClose.addEventListener('click', closeModal);
+    modalPrev.addEventListener('click', showPrevImage);
+    modalNext.addEventListener('click', showNextImage);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (modal.style.display === 'block') {
+            switch(e.key) {
+                case 'Escape':
+                    closeModal();
+                    break;
+                case 'ArrowLeft':
+                    showPrevImage();
+                    break;
+                case 'ArrowRight':
+                    showNextImage();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    isZoomed = !isZoomed;
+                    modalImg.classList.toggle('zoomed', isZoomed);
+                    break;
+            }
+        }
+    });
+    
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal || e.target.classList.contains('modal-content')) {
+            closeModal();
+        }
+    });
+    
+    // Swipe gestures for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    modal.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    modal.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        
+        if (touchEndX < touchStartX - swipeThreshold) {
+            showNextImage();
+        }
+        
+        if (touchEndX > touchStartX + swipeThreshold) {
+            showPrevImage();
+        }
+    }
+});
