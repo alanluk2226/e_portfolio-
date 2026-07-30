@@ -67,12 +67,12 @@ export default function Home() {
               <div className="about-copy">
                 <p>
                   I&apos;m a Computer Science student focused on AI automation and full-stack development.
-                  My strongest work connects APIs into operable products — including internal
-                  AI automation tools built during my internship (details confidential).
+                  During my internship I shipped dashboard features and localization, supported content
+                  production, and ran social channels — alongside building the company landing page.
                 </p>
                 <p>
-                  I care about shipping end-to-end: reliable backends, practical AI tooling,
-                  and thoughtful controls so automation stays useful instead of noisy.
+                  I care about shipping end-to-end: reliable backends, practical product UI,
+                  and clear documentation so teammates can move fast.
                 </p>
               </div>
             </ScrollReveal>
@@ -81,8 +81,8 @@ export default function Home() {
                 <li>
                   <i className="fas fa-robot" />
                   <div>
-                    <strong>AI automation</strong>
-                    <span>Internal content tooling with human-in-the-loop review</span>
+                    <strong>AI &amp; content tooling</strong>
+                    <span>AI-assisted production workflows and social operations</span>
                   </div>
                 </li>
                 <li>

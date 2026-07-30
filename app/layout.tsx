@@ -5,7 +5,7 @@ import SeasonEngine from './components/SeasonEngine'
 export const metadata: Metadata = {
   title: 'Alan Luk | AI & Full-Stack Developer',
   description:
-    'Computer Science student focused on AI automation and full-stack development. Internship experience building multi-platform content bots and web apps.',
+    'Computer Science student focused on AI automation and full-stack development. Internship experience in product dashboards, localization, content production, and web apps.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

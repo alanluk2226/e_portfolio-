@@ -5,8 +5,10 @@ export const workExperience = [
     period: 'Mar 2026 — Jul 2026',
     location: 'Internship',
     bullets: [
-      'Built internal AI-assisted content automation tools for entertainment publishing (implementation details confidential).',
-      'Worked on full-stack features spanning APIs, automation workflows, and human-in-the-loop review before go-live.',
+      'Wrote documentation for an internal tool I had built, to support handoff and onboarding with the engineering team.',
+      'Early in the internship, collaborated with engineers to improve the product dashboard — shipping new features and localizing the UI into English, Simplified Chinese, and Traditional Chinese.',
+      'Later produced a promotional video for leadership using Seedance 2.0 together with CapCut.',
+      'Ran day-to-day social operations across Instagram, YouTube, and Threads; over about 1.5 months on YouTube, grew the channel to 109 subscribers and ~96K views.',
       'Developed the company marketing landing page with Three.js interactive visuals and a responsive product narrative (starrycraze.com).',
     ],
   },
