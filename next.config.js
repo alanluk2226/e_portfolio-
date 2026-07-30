@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  // Default output works best on Vercel (standalone is for Docker/self-host)
 }
 module.exports = nextConfig

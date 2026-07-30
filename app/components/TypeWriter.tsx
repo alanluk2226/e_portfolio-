@@ -8,6 +8,13 @@ export default function TypeWriter({ text, speed = 60, className = '' }: Props) 
   const [done, setDone] = useState(false)
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) {
+      setDisplayed(text)
+      setDone(true)
+      return
+    }
+
     let i = 0
     const interval = setInterval(() => {
       setDisplayed(text.slice(0, i + 1))

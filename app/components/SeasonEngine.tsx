@@ -1,10 +1,14 @@
 'use client'
 import { useEffect, useRef, useState, useCallback } from 'react'
+import Lightfall from './Lightfall/Lightfall'
 
 type Season = 'sky' | 'spring' | 'summer' | 'autumn' | 'winter' | 'void'
 
-const SEASON_DURATION = 18000
+const SEASON_DURATION = 60000
 const SEASONS: Season[] = ['sky', 'spring', 'summer', 'autumn', 'winter', 'void']
+
+/** Stable color refs — avoid remounting WebGL on every parent render */
+const SKY_LIGHTFALL_COLORS = ['#A6C8FF', '#5BA4F5', '#9BB8FF']
 
 const SEASON_THEMES: Record<Season, Record<string, string>> = {
   sky:    { '--accent':'#76c7f0','--card-bg':'rgba(13,43,94,0.55)','--card-border':'rgba(91,164,245,0.25)','--tag-bg':'rgba(91,164,245,0.15)','--tag-color':'#76c7f0','--tag-border':'rgba(91,164,245,0.3)','--btn-primary':'linear-gradient(135deg,#2d7dd2,#5ba4f5)','--section-line':'linear-gradient(90deg,#2d7dd2,#76c7f0)' },
@@ -287,27 +291,51 @@ export default function SeasonEngine() {
   const wipeRef    = useRef<HTMLCanvasElement>(null)
   const [season, setSeason]       = useState<Season>('sky')
   const [bgSeason, setBgSeason]   = useState<Season>('sky')
-  const [isWiping, setIsWiping]   = useState(false)
+  const [reduceMotion, setReduceMotion] = useState(false)
   const particlesRef  = useRef<Particle[]>([])
   const lightningRef  = useRef({ active:false, x:0, opacity:0 })
   const animRef       = useRef<number>(0)
   const wipeAnimRef   = useRef<number>(0)
   const tRef          = useRef(0)
   const seasonIndexRef = useRef(0)
+  const seasonRef = useRef<Season>('sky')
+  const isWipingRef = useRef(false)
+  const scheduleNextRef = useRef<() => void>(() => {})
+  const runWipeRef = useRef<(next: Season) => void>(() => {})
 
   const applyTheme = useCallback((s: Season) => {
     const root = document.documentElement
     Object.entries(SEASON_THEMES[s]).forEach(([k,v]) => root.style.setProperty(k,v))
   }, [])
 
+  useEffect(() => { seasonRef.current = season }, [season])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduceMotion(mq.matches)
+    const onChange = () => setReduceMotion(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  const useVoidVideo = season === 'void' && !reduceMotion
+  const useSkyLightfall = season === 'sky' && !reduceMotion
+
+  const endWipe = useCallback((ctx: CanvasRenderingContext2D, w: number, h: number) => {
+    ctx.clearRect(0, 0, w, h)
+    isWipingRef.current = false
+    scheduleNextRef.current()
+  }, [])
+
   const runWipe = useCallback((nextSeason: Season) => {
     const canvas = wipeRef.current
-    if (!canvas || isWiping) return
+    if (!canvas || isWipingRef.current) return
+    isWipingRef.current = true
+    cancelAnimationFrame(wipeAnimRef.current)
     canvas.width = window.innerWidth; canvas.height = window.innerHeight
     const ctx = canvas.getContext('2d')!
     const w = canvas.width; const h = canvas.height
-
-    setIsWiping(true)
+    const currentSeason = seasonRef.current
 
     // VOID gets its own special transition: distortion ripple -> collapse -> void
     if (nextSeason === 'void') {
@@ -388,14 +416,14 @@ export default function SeasonEngine() {
         }
 
         if (frame < TOTAL) { wipeAnimRef.current = requestAnimationFrame(tick) }
-        else { ctx.clearRect(0, 0, w, h); setIsWiping(false) }
+        else { endWipe(ctx, w, h) }
       }
       wipeAnimRef.current = requestAnimationFrame(tick)
       return
     }
 
     // VOID EXIT: black hole expands and swallows everything
-    if (season === 'void') {
+    if (currentSeason === 'void') {
       let frame = 0; let switched = false
       // PHASE 1 (0-30):  black hole pulses and grows slightly, screen shakes
       // PHASE 2 (25-80): event horizon expands from center, engulfing the screen
@@ -476,7 +504,7 @@ export default function SeasonEngine() {
         }
 
         if (frame < TOTAL) { wipeAnimRef.current = requestAnimationFrame(tick) }
-        else { ctx.clearRect(0, 0, w, h); setIsWiping(false) }
+        else { endWipe(ctx, w, h) }
       }
       wipeAnimRef.current = requestAnimationFrame(tick)
       return
@@ -552,36 +580,49 @@ export default function SeasonEngine() {
         ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); ctx.restore()
       })
       if (frame<TOTAL || wipeParticles.length>0) { wipeAnimRef.current=requestAnimationFrame(tick) }
-      else { ctx.clearRect(0,0,w,h); setIsWiping(false) }
+      else { endWipe(ctx, w, h) }
     }
     wipeAnimRef.current = requestAnimationFrame(tick)
-  }, [isWiping, applyTheme, season])
+  }, [applyTheme, endWipe])
 
-  const runWipeRef = useRef(runWipe)
   useEffect(() => { runWipeRef.current = runWipe }, [runWipe])
 
   // Apply sky theme once on mount only
   useEffect(() => { applyTheme('sky') }, [applyTheme])
 
-  // Season rotation — random, never repeats the current season
+  // One timer only: full 60s after each wipe finishes (avoids stacked intervals)
   useEffect(() => {
-    const otherSeasons: Season[] = ['spring', 'summer', 'autumn', 'winter', 'void']
-    const rotate = () => {
-      const current = SEASONS[seasonIndexRef.current]
-      const pool = SEASONS.filter(s => s !== current)
-      const next = pool[Math.floor(Math.random() * pool.length)]
-      seasonIndexRef.current = SEASONS.indexOf(next)
-      runWipeRef.current(next)
-    }
-    const id = setInterval(rotate, SEASON_DURATION)
-    return () => clearInterval(id)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    let cancelled = false
+    let timer: ReturnType<typeof setTimeout> | null = null
 
+    const scheduleNext = () => {
+      if (timer) clearTimeout(timer)
+      timer = setTimeout(() => {
+        if (cancelled || isWipingRef.current) return
+        const current = seasonRef.current
+        const pool = SEASONS.filter(s => s !== current)
+        const next = pool[Math.floor(Math.random() * pool.length)]
+        seasonIndexRef.current = SEASONS.indexOf(next)
+        runWipeRef.current(next)
+      }, SEASON_DURATION)
+    }
+
+    scheduleNextRef.current = scheduleNext
+    scheduleNext()
+
+    return () => {
+      cancelled = true
+      if (timer) clearTimeout(timer)
+      cancelAnimationFrame(wipeAnimRef.current)
+      isWipingRef.current = false
+    }
+  }, [])
   useEffect(() => {
     const canvas = canvasRef.current; if (!canvas) return
-    const count = season==='summer'?200:season==='winter'?120:season==='spring'?80:season==='autumn'?70:season==='void'?200:0
+    // Custom void video replaces particle canvas when motion is allowed
+    const count = season==='summer'?200:season==='winter'?120:season==='spring'?80:season==='autumn'?70:season==='void'?(reduceMotion?200:0):0
     particlesRef.current = initParticles(count, canvas.width, canvas.height, season)
-  }, [season])
+  }, [season, reduceMotion])
 
   useEffect(() => {
     if (season!=='summer') return
@@ -599,7 +640,7 @@ export default function SeasonEngine() {
     const ctx = canvas.getContext('2d')!
     const resize = () => {
       canvas.width=window.innerWidth; canvas.height=window.innerHeight
-      const count = season==='summer'?200:season==='winter'?120:season==='spring'?80:season==='autumn'?70:season==='void'?200:0
+      const count = season==='summer'?200:season==='winter'?120:season==='spring'?80:season==='autumn'?70:season==='void'?(reduceMotion?200:0):0
       particlesRef.current = initParticles(count, canvas.width, canvas.height, season)
     }
     resize(); window.addEventListener('resize', resize)
@@ -610,23 +651,62 @@ export default function SeasonEngine() {
         else if (season==='summer') { p.x+=p.vx; p.y+=p.vy; if(p.y>h){p.y=-10;p.x=Math.random()*w} }
         else if (season==='winter') { p.y+=p.vy; if(p.y>h){p.y=-10;p.x=Math.random()*w} }
       })
-      if (season==='sky')    drawSky(ctx,w,h,t)
+      if (season==='sky') {
+        if (reduceMotion) drawSky(ctx,w,h,t)
+        else ctx.clearRect(0, 0, w, h)
+      }
       if (season==='spring') drawSpring(ctx,ps,w,h,t)
       if (season==='summer') drawSummer(ctx,ps,w,h,t,lightningRef.current)
       if (season==='autumn') drawAutumn(ctx,ps,w,h,t)
       if (season==='winter') drawWinter(ctx,ps,w,h,t)
-      if (season==='void')   drawVoid(ctx,ps,w,h,t)
+      if (season==='void') {
+        if (reduceMotion) drawVoid(ctx,ps,w,h,t)
+        else ctx.clearRect(0, 0, w, h)
+      }
       animRef.current = requestAnimationFrame(loop)
     }
     loop()
     return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize) }
-  }, [season])
+  }, [season, reduceMotion])
 
   const LABELS: Record<Season,string> = { sky:'Sky', spring:'Spring', summer:'Summer', autumn:'Autumn', winter:'Winter', void:'Void' }
 
   return (
     <>
       <div className="sky-bg" style={{ background:SKY_GRADIENTS[bgSeason], transition:'background 1.2s ease' }} />
+      {useSkyLightfall && (
+        <div className="sky-lightfall" aria-hidden>
+          <Lightfall
+            colors={SKY_LIGHTFALL_COLORS}
+            backgroundColor="#0d2b5e"
+            speed={0.45}
+            streakCount={2}
+            streakWidth={1}
+            streakLength={1}
+            glow={0.85}
+            density={0.55}
+            twinkle={0.8}
+            zoom={2.8}
+            backgroundGlow={0.4}
+            opacity={0.9}
+            mouseInteraction={false}
+          />
+        </div>
+      )}
+      {useVoidVideo && (
+        <div className="void-video-wrap" aria-hidden>
+          <video
+            className="void-video"
+            src="/assets/video/void-bg.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+          <div className="void-video-vignette" />
+        </div>
+      )}
       <canvas ref={canvasRef} style={{ position:'fixed', inset:0, zIndex:1, pointerEvents:'none' }} />
       <canvas ref={wipeRef}   style={{ position:'fixed', inset:0, zIndex:50, pointerEvents:'none' }} />
       <div className="season-badge">{LABELS[season]}</div>

@@ -1,106 +1,156 @@
+export const workExperience = [
+  {
+    company: 'Starrycraze Technology Limited',
+    role: 'AI & Full-Stack Engineer Intern',
+    period: 'Mar 2026 — Jul 2026',
+    location: 'Internship',
+    bullets: [
+      'Built an entertainment content automation system that runs scan → AI produce → Discord preview/approve → multi-platform publish as one pipeline.',
+      'Used Discord as the operations console: Top 15 story picks, platform selection, button-triggered generation, preview, and approve-to-publish — without typing commands.',
+      'Shipped platform-specific outputs (Threads, Instagram, Shorts/YouTube) with local and cloud deployments of the same codebase for experiment vs stable production.',
+      'Developed the company marketing landing page with Three.js interactive visuals and a responsive product narrative (starrycraze.com).',
+    ],
+  },
+]
+
 export const myProjects = [
   {
-    title: 'Workout app with courses enrollment, admin system',
-    tags: ['Node.js', 'Express.js', 'Render', 'MongoDB', 'EJS', 'Javascript', 'CURL', 'Ubuntu'],
+    title: 'Pop Culture Auto-Post System',
+    tags: ['Node.js', 'TypeScript', 'Discord.js', 'OpenRouter', 'Meta Graph API', 'ffmpeg'],
     images: [
-      { src: '/assets/images/workout.png', alt: 'Workout App Screenshot 1' },
-      { src: '/assets/images/workout2.png', alt: 'Workout App Screenshot 2' },
-      { src: '/assets/images/workout3.png', alt: 'Workout App Screenshot 3' },
-      { src: '/assets/images/workout4.png', alt: 'Workout App Screenshot 4' },
-      { src: '/assets/images/workout5.png', alt: 'Workout App Screenshot 5' },
-      { src: '/assets/images/Mongodb1.png', alt: 'MongoDB Screenshot 1' },
-      { src: '/assets/images/mongodb2.png', alt: 'MongoDB Screenshot 2' },
-      { src: '/assets/images/mongodb3.png', alt: 'MongoDB Screenshot 3' },
-      { src: '/assets/images/mongodb4.png', alt: 'MongoDB Screenshot 4' },
-      { src: '/assets/images/API1.png', alt: 'API Screenshot 1' },
-      { src: '/assets/images/API2.png', alt: 'API Screenshot 2' },
-      { src: '/assets/images/API3.png', alt: 'API Screenshot 3' },
-      { src: '/assets/images/API4.png', alt: 'API Screenshot 4' },
-      { src: '/assets/images/API5.png', alt: 'API Screenshot 5' },
+      { src: '/assets/images/autopost-discord-review.png', alt: 'Discord review desk with publish hold discard rewrite' },
+      { src: '/assets/images/autopost-news-embed.png', alt: 'StarrySocial news post preview embed' },
+      { src: '/assets/images/autopost-shorts-preview.png', alt: 'YouTube Shorts preview in Discord review flow' },
     ],
-    description: `A full-featured workout platform with user authentication, courses enrollment, track workout with CRUD, fast workout setup for beginner and advanced, chat bot, week and month analysis, weekly promotions. By using green as it psychologically represents growth, health, and success—perfect for tracking fitness progress and motivating users toward their goals. The project is using responsive design, viewing in mobile phone is possible especially the course timetable. There is an admin account for the admin to manage the courses, coaches, users.`,
-    credentials: `Test account: test123456 | password: 123456\nAdmin account: admin123456 | password: 123456\n(For security reason, when login with admin account, do not Remember me, else it will fail to login)`,
-    links: [
-      { label: 'View on Render', href: 'https://workhard-b5zs.onrender.com/' },
-      { label: 'View on Github', href: 'https://github.com/alanluk2226/Workhard' },
-    ],
+    description:
+      'An entertainment publishing system — not a chat bot. It scans RSS feeds (e.g. TMZ, Billboard, Soompi), filters and ranks stories into a Discord Top 15, then lets editors pick a platform and trigger generation in one flow. The same backend produces Threads/Instagram/Shorts/YouTube assets, posts previews back to Discord, and only publishes after human approval. Discord is the control desk for selection, generation, preview, and go-live; local and cloud runs are the same app in two environments.',
+    credentials: null,
+    links: [],
   },
   {
-    title: 'HKschool - Hong Kong School Finder',
-    tags: ['React Native', 'Mobile App', 'School Group Project'],
+    title: 'StarryCraze — Interactive Landing Page',
+    tags: ['Three.js', 'JavaScript', 'Landing Page', 'Responsive UI'],
     images: [
-      { src: '/assets/images/Mobileapp1.png', alt: 'HKschool Screenshot 1' },
-      { src: '/assets/images/Mobileapp2.png', alt: 'HKschool Screenshot 2' },
-      { src: '/assets/images/Mobileapp3.png', alt: 'HKschool Screenshot 3' },
-      { src: '/assets/images/Mobileapp4.png', alt: 'HKschool Screenshot 4' },
-      { src: '/assets/images/Mobileapp5.png', alt: 'HKschool Screenshot 5' },
-      { src: '/assets/images/Mobileapp6.png', alt: 'HKschool Screenshot 6' },
-      { src: '/assets/images/Mobileapp7.png', alt: 'HKschool Screenshot 7' },
-      { src: '/assets/images/Mobileapp8.png', alt: 'HKschool Screenshot 8' },
-      { src: '/assets/images/Mobileapp9.png', alt: 'HKschool Screenshot 9' },
+      { src: '/assets/images/starrycraze-landing.png', alt: 'StarryCraze landing page with Three.js hero' },
     ],
-    description: 'A mobile app developed with Android Studio to view all Hong Kong schools. Built as a group project, it allows users to browse and explore school information across Hong Kong.',
+    description:
+      'Company marketing site for StarryCraze — an entertainment AI agent product. Built an interactive landing experience with Three.js visuals, clear product storytelling, and responsive layout to introduce star tracking and messaging-app entry points.',
     credentials: null,
     links: [
-      { label: 'View on Github', href: 'https://github.com/alanluk2226/COMP3130_MobileAppDevelopment' },
+      { label: 'Live Site', href: 'https://starrycraze.com/' },
     ],
   },
   {
-    title: 'Online Course Web Application',
-    tags: ['Spring Boot', 'Spring MVC', 'Spring Security', 'JSP/JSTL', 'H2', 'IntelliJ IDEA', 'School Group Project'],
+    title: 'WorkHard — Fitness Platform',
+    tags: ['Node.js', 'Express', 'MongoDB', 'EJS', 'REST API', 'Render'],
+    images: [
+      { src: '/assets/images/workout.png', alt: 'WorkHard dashboard' },
+      { src: '/assets/images/workout2.png', alt: 'WorkHard courses' },
+      { src: '/assets/images/workout3.png', alt: 'WorkHard workout tracking' },
+      { src: '/assets/images/workout4.png', alt: 'WorkHard analytics' },
+      { src: '/assets/images/workout5.png', alt: 'WorkHard mobile view' },
+      { src: '/assets/images/Mongodb1.png', alt: 'MongoDB schema overview' },
+      { src: '/assets/images/mongodb2.png', alt: 'MongoDB collections' },
+      { src: '/assets/images/mongodb3.png', alt: 'MongoDB query view' },
+      { src: '/assets/images/mongodb4.png', alt: 'MongoDB data model' },
+      { src: '/assets/images/API1.png', alt: 'API endpoint overview' },
+      { src: '/assets/images/API2.png', alt: 'API authentication' },
+      { src: '/assets/images/API3.png', alt: 'API course routes' },
+      { src: '/assets/images/API4.png', alt: 'API workout routes' },
+      { src: '/assets/images/API5.png', alt: 'API admin routes' },
+    ],
+    description:
+      'Full-stack fitness platform with authentication, course enrollment, workout CRUD, progress analytics, and an admin console for courses, coaches, and users. Built with a responsive UI so the timetable and core flows work on mobile.',
+    credentials:
+      'Demo — user: test123456 / 123456\nDemo — admin: admin123456 / 123456\nNote: avoid “Remember me” on the admin login.',
+    links: [
+      { label: 'Live Demo', href: 'https://workhard-b5zs.onrender.com/' },
+      { label: 'GitHub', href: 'https://github.com/alanluk2226/Workhard' },
+    ],
+  },
+  {
+    title: 'HKschool — School Directory App',
+    tags: ['React Native', 'Mobile', 'Group Project'],
+    images: [
+      { src: '/assets/images/Mobileapp1.png', alt: 'HKschool home screen' },
+      { src: '/assets/images/Mobileapp2.png', alt: 'HKschool school list' },
+      { src: '/assets/images/Mobileapp3.png', alt: 'HKschool search' },
+      { src: '/assets/images/Mobileapp4.png', alt: 'HKschool school detail' },
+      { src: '/assets/images/Mobileapp5.png', alt: 'HKschool filters' },
+      { src: '/assets/images/Mobileapp6.png', alt: 'HKschool map view' },
+      { src: '/assets/images/Mobileapp7.png', alt: 'HKschool favorites' },
+      { src: '/assets/images/Mobileapp8.png', alt: 'HKschool profile' },
+      { src: '/assets/images/Mobileapp9.png', alt: 'HKschool settings' },
+    ],
+    description:
+      'Mobile app for browsing Hong Kong school information. Built as a group project with a focus on clear navigation, searchable listings, and practical day-to-day usability.',
+    credentials: null,
+    links: [
+      { label: 'GitHub', href: 'https://github.com/alanluk2226/COMP3130_MobileAppDevelopment' },
+    ],
+  },
+  {
+    title: 'Course Portal — Spring Boot Web App',
+    tags: ['Spring Boot', 'Spring Security', 'MVC', 'JSP', 'H2'],
     images: Array.from({ length: 16 }, (_, i) => ({
       src: `/assets/images/webdev${i + 1}.png`,
-      alt: `Online Course Web App Screenshot ${i + 1}`,
+      alt: `Course portal screenshot ${i + 1}`,
     })),
-    description: 'A school group project — an online course web application built with Spring Boot, Spring MVC, Spring Security, JSP/JSTL, and H2 database, developed in IntelliJ IDEA.',
-    credentials: `Teacher account: teacher | password: teacher123\nStudent account: student1 | password: student123\nStudent account: student2 | password: student123\nStudent account: student3 | password: student123`,
+    description:
+      'Role-based online course portal with teacher and student flows. Implements authentication, authorization, and MVC structure with Spring Boot, Spring Security, and an H2 database.',
+    credentials:
+      'Teacher: teacher / teacher123\nStudent: student1 / student123',
     links: [
-      { label: 'View on Github', href: 'https://github.com/alanluk2226/Copy-of-COMP3800' },
-    ],
-  },
-  {
-    title: 'Simple .apk attack',
-    tags: ['VMware', 'Kali', 'MSF'],
-    images: [
-      { src: '/assets/images/Attack1.png', alt: 'Attack App Screenshot 1' },
-      { src: '/assets/images/Attack2.png', alt: 'Attack App Screenshot 2' },
-      { src: '/assets/images/Attack3.png', alt: 'Attack App Screenshot 3' },
-    ],
-    description: 'A simple penetration (.apk) created by msfvenom, in VMWare. It helps me develop a basic concept about cyber security, how the hacker hacks a phone or pc, and how to help protect the data.',
-    credentials: null,
-    links: [
-      { label: 'View on Github', href: 'https://github.com/alanluk2226/Simple-attack' },
+      { label: 'GitHub', href: 'https://github.com/alanluk2226/Copy-of-COMP3800' },
     ],
   },
 ]
 
 export const otherProjects = [
   {
-    title: 'AI-Driven Phishing Detection and Mitigation Assistant',
-    tags: ['NVIDIA', 'HKSTP', 'AI/ML', 'Email Security', 'NLP', 'GitHub'],
-    images: [{ src: '/assets/images/Project.png', alt: 'AI Phishing Detection Overview' }],
-    description: `This project proposal was developed during an NVIDIA workshop hosted by HKSTP. A comprehensive proposal for developing a prototype AI-driven phishing detection and mitigation assistant that focuses on email as the primary attack vector. The system parses incoming emails into structured features and analyzes them to produce a phishing risk score. Based on this assessment, intelligent agents decide whether to flag, quarantine, or allow messages, providing automated protection against phishing attacks while minimizing false positives.`,
+    title: 'AI Phishing Detection Assistant',
+    tags: ['NVIDIA', 'HKSTP', 'AI/ML', 'Email Security', 'NLP'],
+    images: [{ src: '/assets/images/Project.png', alt: 'AI phishing detection proposal overview' }],
+    description:
+      'Proposal developed during an NVIDIA × HKSTP workshop for an AI assistant that scores email phishing risk and recommends flag, quarantine, or allow actions. Focused on structured feature extraction and reducing false positives.',
     links: [
       { label: 'View Proposal (PDF)', href: '/assets/documents/Project_Proposal.pdf' },
+    ],
+  },
+  {
+    title: 'Android Security Lab — Controlled APK Analysis',
+    tags: ['Kali Linux', 'Metasploit', 'VMware', 'Security Research'],
+    images: [
+      { src: '/assets/images/Attack1.png', alt: 'Security lab environment setup' },
+      { src: '/assets/images/Attack2.png', alt: 'Payload generation in isolated VM' },
+      { src: '/assets/images/Attack3.png', alt: 'Analysis and mitigation notes' },
+    ],
+    description:
+      'Controlled lab study of how malicious Android payloads are generated and delivered in an isolated VMware environment. Purpose: understand common attack paths and strengthen defensive awareness — not for real-world use.',
+    credentials: null,
+    links: [
+      { label: 'GitHub', href: 'https://github.com/alanluk2226/Simple-attack' },
     ],
   },
 ]
 
 export const certificates = [
   {
-    title: 'NVIDIA Deep Learning Certificate',
-    tags: ['NVIDIA', 'Deep Learning', 'Python', 'AI Training'],
-    images: [{ src: '/assets/images/Nvidia1.png', alt: 'NVIDIA Deep Learning Certificate' }],
-    description: `The deep learning course focuses on how to train AI, which is a subset of machine learning. In this course, I was able to train the model to identify what animal is from a picture by using Python. It became an important foundation for my future AI training and provided hands-on experience with neural networks and model optimization.`,
+    title: 'NVIDIA — Deep Learning Fundamentals',
+    tags: ['NVIDIA', 'Deep Learning', 'Python'],
+    images: [{ src: '/assets/images/Nvidia1.png', alt: 'NVIDIA Deep Learning certificate' }],
+    description:
+      'Hands-on training covering neural network basics and model training in Python, including an image classification exercise that grounded later AI coursework.',
     links: [
       { label: 'View Certificate', href: 'https://learn.nvidia.com/certificates?id=vpB4tLPKTf6P5H6tpWq0Mw' },
     ],
   },
   {
-    title: 'NVIDIA Transformer Architecture Certificate',
-    tags: ['NVIDIA', 'Transformers', 'NLP', 'Neural Networks'],
-    images: [{ src: '/assets/images/Nvidia2.png', alt: 'NVIDIA Transformer Architecture Certificate' }],
-    description: `I learned the concept of NVIDIA's Transformer architecture. It can transfer the user's natural language into numeric tokens, and then convert them into vectors (matrices). These matrices are processed through multiple layers of neural networks using attention mechanisms to understand context, relationships, and meaning. Finally, the model generates a response by predicting the next most likely token in sequence. It gave me a huge concept about how AI works and will help my future work related to AI engineering, particularly in building AI models.`,
+    title: 'NVIDIA — Transformer Architecture',
+    tags: ['NVIDIA', 'Transformers', 'NLP'],
+    images: [{ src: '/assets/images/Nvidia2.png', alt: 'NVIDIA Transformer Architecture certificate' }],
+    description:
+      'Study of how transformers tokenize language, build contextual representations with attention, and generate sequences — useful foundation for NLP and applied AI work.',
     links: [
       { label: 'View Certificate', href: 'https://learn.nvidia.com/certificates?id=YjOGbXNIRNW_sCjce-pZMg' },
     ],

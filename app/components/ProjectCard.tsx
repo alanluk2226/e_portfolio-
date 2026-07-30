@@ -26,13 +26,15 @@ export default function ProjectCard({ title, tags, images, description, credenti
             {credentials.split('\n').map((line, i) => <div key={i}>{line}</div>)}
           </div>
         )}
-        <div className="card-links">
-          {links.map(link => (
-            <a key={link.href} href={link.href} className="btn btn-ghost btn-sm" target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))}
-        </div>
+        {links.length > 0 && (
+          <div className="card-links">
+            {links.map(link => (
+              <a key={link.href} href={link.href} className="btn btn-ghost btn-sm" target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

@@ -13,6 +13,12 @@ export default function ScrollReveal({ children, className = '', delay = 0 }: Pr
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) {
+      el.classList.add('revealed')
+      return
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -21,7 +27,7 @@ export default function ScrollReveal({ children, className = '', delay = 0 }: Pr
           observer.unobserve(el)
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.14, rootMargin: '0px 0px -6% 0px' }
     )
     observer.observe(el)
     return () => observer.disconnect()

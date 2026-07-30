@@ -20,7 +20,7 @@ export default function Navbar() {
           <i className={`fas ${open ? 'fa-times' : 'fa-bars'}`} />
         </button>
         <ul className={`nav-links${open ? ' active' : ''}`}>
-          {[['#home','Home'],['#projects','Projects'],['#other-projects','Other Projects'],['#links','Connect']].map(([id, label]) => (
+          {[['#home','Home'],['#about','About'],['#experience','Experience'],['#projects','Projects'],['#links','Contact']].map(([id, label]) => (
             <li key={id}><a href={id} onClick={(e) => scroll(e, id)}>{label}</a></li>
           ))}
         </ul>
