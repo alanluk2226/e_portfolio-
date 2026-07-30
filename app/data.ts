@@ -11,6 +11,22 @@ export const workExperience = [
       'Ran day-to-day social operations across Instagram, YouTube, and Threads; over about 1.5 months on YouTube, grew the channel to 109 subscribers and ~96K views.',
       'Developed the company marketing landing page with Three.js interactive visuals and a responsive product narrative (starrycraze.com).',
     ],
+    relatedHref: '#projects',
+    relatedLabel: 'View related project',
+  },
+  {
+    company: 'Hong Kong Science & Technology Parks',
+    role: 'Talent Foundry — Programme Participant',
+    period: 'In progress · 94 / 100 hrs',
+    location: 'Bootcamp',
+    bullets: [
+      'Early sessions focused on communication skills — finding teammates and writing CVs.',
+      'Studied AWS fundamentals and completed NVIDIA workshops, earning two NVIDIA certificates.',
+      'Used a workshop opportunity to write a proposal for NVIDIA (AI phishing detection).',
+      'Connected with founders and peers to expand my professional network in the I&T community.',
+    ],
+    relatedHref: 'https://www.hkstp.org/en/talent/early-career-and-internship/talent-foundry',
+    relatedLabel: 'Programme page',
   },
 ]
 
@@ -136,16 +152,6 @@ export const otherProjects = [
 ]
 
 export const certificates = [
-  {
-    title: 'HKSTP — Talent Foundry',
-    tags: ['HKSTP', 'Bootcamp', 'AWS', 'NVIDIA', 'Networking'],
-    images: [{ src: '/assets/images/talent-foundry-cover.svg', alt: 'Hong Kong Science & Technology Parks Talent Foundry' }],
-    description:
-      'Hong Kong Science & Technology Parks Talent Foundry bootcamp. Early sessions focused on communication — finding teammates and writing CVs — then AWS fundamentals and NVIDIA workshops (earning two NVIDIA certificates). Used a workshop opportunity to write a proposal for NVIDIA, and connected with founders to grow my professional network.',
-    links: [
-      { label: 'Programme Page', href: 'https://www.hkstp.org/en/talent/early-career-and-internship/talent-foundry' },
-    ],
-  },
   {
     title: 'NVIDIA — Deep Learning Fundamentals',
     tags: ['NVIDIA', 'Deep Learning', 'Python'],

@@ -134,9 +134,17 @@ export default function Home() {
                       <li key={bullet}>{bullet}</li>
                     ))}
                   </ul>
-                  <a href="#projects" className="experience-link">
-                    View related project <i className="fas fa-arrow-right" />
-                  </a>
+                  {job.relatedHref && (
+                    <a
+                      href={job.relatedHref}
+                      className="experience-link"
+                      {...(job.relatedHref.startsWith('http')
+                        ? { target: '_blank', rel: 'noreferrer' }
+                        : {})}
+                    >
+                      {job.relatedLabel ?? 'View related project'} <i className="fas fa-arrow-right" />
+                    </a>
+                  )}
                 </article>
               </ScrollReveal>
             ))}
