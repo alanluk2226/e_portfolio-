@@ -17,9 +17,11 @@ export default function ProjectCard({ title, tags, images, description, credenti
       <Carousel images={images} single={images.length === 1} />
       <div className="project-info">
         <h3>{title}</h3>
-        <div className="project-tags">
-          {tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
-        </div>
+        {tags.length > 0 && (
+          <div className="project-tags">
+            {tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+          </div>
+        )}
         <p>{description}</p>
         {credentials && (
           <div className="credentials-box">

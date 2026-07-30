@@ -13,11 +13,11 @@ const techStack = [
   { icon: 'fab fa-js', label: 'TypeScript' },
   { icon: 'fab fa-react', label: 'React' },
   { icon: 'fas fa-server', label: 'Next.js' },
-  { icon: 'fas fa-robot', label: 'OpenRouter' },
-  { icon: 'fab fa-discord', label: 'Discord.js' },
-  { icon: 'fas fa-share-alt', label: 'Meta Graph API' },
-  { icon: 'fas fa-film', label: 'ffmpeg' },
+  { icon: 'fas fa-robot', label: 'AI APIs' },
+  { icon: 'fas fa-plug', label: 'API Integration' },
+  { icon: 'fas fa-film', label: 'Media tooling' },
   { icon: 'fas fa-leaf', label: 'MongoDB' },
+  { icon: 'fab fa-git-alt', label: 'Git' },
 ]
 
 export default function Home() {
@@ -67,12 +67,12 @@ export default function Home() {
               <div className="about-copy">
                 <p>
                   I&apos;m a Computer Science student focused on AI automation and full-stack development.
-                  My strongest work connects external APIs into operable systems — for example an internship
-                  content automation system where Discord is the desk for scan, generate, preview, and approve-to-publish.
+                  My strongest work connects APIs into operable products — including internal
+                  AI automation tools built during my internship (details confidential).
                 </p>
                 <p>
                   I care about shipping end-to-end: reliable backends, practical AI tooling,
-                  and human-in-the-loop controls so automation stays useful instead of noisy.
+                  and thoughtful controls so automation stays useful instead of noisy.
                 </p>
               </div>
             </ScrollReveal>
@@ -81,8 +81,8 @@ export default function Home() {
                 <li>
                   <i className="fas fa-robot" />
                   <div>
-                    <strong>Content automation systems</strong>
-                    <span>RSS → AI produce → Discord approve → multi-platform publish</span>
+                    <strong>AI automation</strong>
+                    <span>Internal content tooling with human-in-the-loop review</span>
                   </div>
                 </li>
                 <li>
@@ -96,7 +96,7 @@ export default function Home() {
                   <i className="fas fa-plug" />
                   <div>
                     <strong>API integration</strong>
-                    <span>OpenRouter, Meta Graph, Discord.js, media tooling</span>
+                    <span>External services, media tooling, production workflows</span>
                   </div>
                 </li>
               </ul>

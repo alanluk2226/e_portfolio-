@@ -5,9 +5,8 @@ export const workExperience = [
     period: 'Mar 2026 — Jul 2026',
     location: 'Internship',
     bullets: [
-      'Built an entertainment content automation system that runs scan → AI produce → Discord preview/approve → multi-platform publish as one pipeline.',
-      'Used Discord as the operations console: Top 15 story picks, platform selection, button-triggered generation, preview, and approve-to-publish — without typing commands.',
-      'Shipped platform-specific outputs (Threads, Instagram, Shorts/YouTube) with local and cloud deployments of the same codebase for experiment vs stable production.',
+      'Built internal AI-assisted content automation tools for entertainment publishing (implementation details confidential).',
+      'Worked on full-stack features spanning APIs, automation workflows, and human-in-the-loop review before go-live.',
       'Developed the company marketing landing page with Three.js interactive visuals and a responsive product narrative (starrycraze.com).',
     ],
   },
@@ -16,14 +15,14 @@ export const workExperience = [
 export const myProjects = [
   {
     title: 'Pop Culture Auto-Post System',
-    tags: ['Node.js', 'TypeScript', 'Discord.js', 'OpenRouter', 'Meta Graph API', 'ffmpeg'],
+    tags: [],
     images: [
-      { src: '/assets/images/autopost-discord-review.png', alt: 'Discord review desk with publish hold discard rewrite' },
-      { src: '/assets/images/autopost-news-embed.png', alt: 'StarrySocial news post preview embed' },
-      { src: '/assets/images/autopost-shorts-preview.png', alt: 'YouTube Shorts preview in Discord review flow' },
+      { src: '/assets/images/autopost-discord-review.png', alt: 'Internal review workflow preview' },
+      { src: '/assets/images/autopost-news-embed.png', alt: 'Generated content preview' },
+      { src: '/assets/images/autopost-shorts-preview.png', alt: 'Short-form media preview' },
     ],
     description:
-      'An entertainment publishing system — not a chat bot. It scans RSS feeds (e.g. TMZ, Billboard, Soompi), filters and ranks stories into a Discord Top 15, then lets editors pick a platform and trigger generation in one flow. The same backend produces Threads/Instagram/Shorts/YouTube assets, posts previews back to Discord, and only publishes after human approval. Discord is the control desk for selection, generation, preview, and go-live; local and cloud runs are the same app in two environments.',
+      'Internship project at Starrycraze Technology Limited: an internal entertainment content automation system with AI-assisted production and human approval before publishing. Technical and operational details are confidential.',
     credentials: null,
     links: [],
   },
