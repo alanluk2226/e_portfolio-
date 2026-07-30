@@ -17,10 +17,9 @@ export const workExperience = [
   {
     company: 'Hong Kong Science & Technology Parks',
     role: 'Talent Foundry — Programme Participant',
-    period: 'In progress · 94 / 100 hrs',
+    period: 'Sep 2025 — Aug 2026',
     location: 'Bootcamp',
     bullets: [
-      'Early sessions focused on communication skills — finding teammates and writing CVs.',
       'Studied AWS fundamentals and completed NVIDIA workshops, earning two NVIDIA certificates.',
       'Used a workshop opportunity to write a proposal for NVIDIA (AI phishing detection).',
       'Connected with founders and peers to expand my professional network in the I&T community.',
