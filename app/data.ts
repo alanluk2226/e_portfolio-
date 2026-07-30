@@ -14,8 +14,8 @@ export const workExperience = [
 
 export const myProjects = [
   {
-    title: 'Pop Culture Auto-Post System',
-    tags: [],
+    title: 'Pop Culture Auto-Post Bot',
+    tags: ['Internship'],
     images: [
       { src: '/assets/images/autopost-discord-review.png', alt: 'Internal review workflow preview' },
       { src: '/assets/images/autopost-news-embed.png', alt: 'Generated content preview' },
@@ -27,8 +27,8 @@ export const myProjects = [
     links: [],
   },
   {
-    title: 'StarryCraze — Interactive Landing Page',
-    tags: ['Three.js', 'JavaScript', 'Landing Page', 'Responsive UI'],
+    title: 'StarryCraze Landing Page',
+    tags: ['Internship', 'Three.js', 'JavaScript', 'Landing Page', 'Responsive UI'],
     images: [
       { src: '/assets/images/starrycraze-landing.png', alt: 'StarryCraze landing page with Three.js hero' },
     ],
