@@ -7,7 +7,7 @@ export const workExperience = [
     bullets: [
       'Wrote documentation for an internal tool I had built, to support handoff and onboarding with the engineering team.',
       'Early in the internship, collaborated with engineers to improve the product dashboard — shipping new features and localizing the UI into English, Simplified Chinese, and Traditional Chinese.',
-      'Later produced a promotional video for Star Track Map — a company web app (not built by me) — using Seedance 2.0 together with CapCut.'
+      'Later produced a promotional video for Star Track Map — a company web app (not built by me) — using Seedance 2.0 together with CapCut.',
       'Ran day-to-day social operations across Instagram, YouTube, and Threads; over about 1.5 months on YouTube, grew the channel to 109 subscribers and ~96K views.',
       'Developed the company marketing landing page with Three.js interactive visuals and a responsive product narrative (starrycraze.com).',
     ],
@@ -113,7 +113,7 @@ export const otherProjects = [
     tags: ['NVIDIA', 'HKSTP', 'AI/ML', 'Email Security', 'NLP'],
     images: [{ src: '/assets/images/Project.png', alt: 'AI phishing detection proposal overview' }],
     description:
-      'Proposal developed during an NVIDIA × HKSTP workshop for an AI assistant that scores email phishing risk and recommends flag, quarantine, or allow actions. Focused on structured feature extraction and reducing false positives.',
+      'Proposal written during an NVIDIA workshop opportunity in HKSTP Talent Foundry: an AI assistant that scores email phishing risk and recommends flag, quarantine, or allow actions. Focused on structured feature extraction and reducing false positives.',
     links: [
       { label: 'View Proposal (PDF)', href: '/assets/documents/Project_Proposal.pdf' },
     ],
@@ -136,6 +136,16 @@ export const otherProjects = [
 ]
 
 export const certificates = [
+  {
+    title: 'HKSTP — Talent Foundry',
+    tags: ['HKSTP', 'Bootcamp', 'AWS', 'NVIDIA', 'Networking'],
+    images: [{ src: '/assets/images/talent-foundry-cover.svg', alt: 'Hong Kong Science & Technology Parks Talent Foundry' }],
+    description:
+      'Hong Kong Science & Technology Parks Talent Foundry bootcamp. Early sessions focused on communication — finding teammates and writing CVs — then AWS fundamentals and NVIDIA workshops (earning two NVIDIA certificates). Used a workshop opportunity to write a proposal for NVIDIA, and connected with founders to grow my professional network.',
+    links: [
+      { label: 'Programme Page', href: 'https://www.hkstp.org/en/talent/early-career-and-internship/talent-foundry' },
+    ],
+  },
   {
     title: 'NVIDIA — Deep Learning Fundamentals',
     tags: ['NVIDIA', 'Deep Learning', 'Python'],
