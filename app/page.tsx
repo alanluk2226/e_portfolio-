@@ -1,265 +1,208 @@
 'use client'
-import Navbar from './components/Navbar'
-import ProjectSlider from './components/ProjectSlider'
-import ScrollReveal from './components/ScrollReveal'
-import TypeWriter from './components/TypeWriter'
-import ProjectCard from './components/ProjectCard'
-import HeroBouncePreview from './components/HeroBouncePreview'
-import { myProjects, otherProjects, certificates, workExperience } from './data'
+import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import { useVoyagePhase } from './hooks/useVoyagePhase'
+import CabinShell from './components/cabin/CabinShell'
+import CabinPanel from './components/cabin/CabinPanel'
+import {
+  WEATHER_OPTIONS,
+  type WeatherKind,
+} from './components/voyage/weatherTypes'
 
-const techStack = [
-  { icon: 'fas fa-cube', label: 'Three.js' },
-  { icon: 'fab fa-node-js', label: 'Node.js' },
-  { icon: 'fab fa-js', label: 'TypeScript' },
-  { icon: 'fab fa-react', label: 'React' },
-  { icon: 'fas fa-server', label: 'Next.js' },
-  { icon: 'fas fa-robot', label: 'AI APIs' },
-  { icon: 'fas fa-plug', label: 'API Integration' },
-  { icon: 'fas fa-film', label: 'Media tooling' },
-  { icon: 'fas fa-leaf', label: 'MongoDB' },
-  { icon: 'fab fa-git-alt', label: 'Git' },
-]
+const VoyageScene = dynamic(() => import('./components/voyage/VoyageScene'), { ssr: false })
+const CabinScene = dynamic(() => import('./components/cabin/CabinScene'), { ssr: false })
 
 export default function Home() {
+  const {
+    phase,
+    room,
+    setRoom,
+    panelOpen,
+    openPanel,
+    closePanel,
+    reduceMotion,
+    htmlCabinOnly,
+    scenePhase,
+    sceneActive,
+    goBoard,
+    enterCabin,
+    backToSea,
+    backToDeck,
+    openLogbook,
+  } = useVoyagePhase()
+
+  const [weather, setWeather] = useState<WeatherKind>('clear')
+
+  const showHero = phase === 'voyage'
+  const showDeck = phase === 'deck'
+  const showCabin3d = phase === 'cabin' && !htmlCabinOnly
+  const showCabinHtml = phase === 'cabin' && htmlCabinOnly
+  // Weather / orbit controls are desktop voyage toys
+  const showWeather = !htmlCabinOnly && (phase === 'voyage' || phase === 'deck')
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      if (phase === 'deck') {
+        backToSea()
+        return
+      }
+      if (phase !== 'cabin') return
+      if (panelOpen) {
+        closePanel()
+        return
+      }
+      backToDeck()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [phase, panelOpen, closePanel, backToSea, backToDeck])
+
   return (
-    <div className="page-wrapper">
-      <Navbar />
+    <div className={`voyage-app${htmlCabinOnly ? ' touch-ui' : ''}`}>
+      <a
+        className="skip-link"
+        href="#cabin-main-skip"
+        onClick={e => {
+          e.preventDefault()
+          openLogbook('quarters')
+        }}
+      >
+        Skip to cabin content
+      </a>
 
-      {/* ── HERO ── */}
-      <section className="hero" id="home">
-        <div className="hero-content">
-          <h1>
-            Hi, I&apos;m <span className="name"><TypeWriter text="Alan Luk" speed={95} /></span>
-            <span className="tagline">Computer Science student · AI &amp; Full-stack</span>
-          </h1>
-          <p className="hero-desc">
-            I build AI-powered automation and full-stack products — from API integrations
-            and content pipelines to clean, usable interfaces. Open to internships and junior roles.
-          </p>
-          <div className="hero-btns">
-            <a href="#projects" className="btn btn-primary">
-              <i className="fas fa-briefcase" /> View Projects
-            </a>
-            <a href="#links" className="btn btn-ghost">
-              <i className="fas fa-envelope" /> Contact
-            </a>
-          </div>
-          <HeroBouncePreview />
-        </div>
-        <div className="hero-scroll">
-          <div className="scroll-line" />
-          <span>Scroll</span>
-        </div>
-      </section>
+      {/* Touch / reduced-motion: skip loading the sea canvas until they return from the logbook */}
+      {(!htmlCabinOnly || sceneActive) && (
+        <VoyageScene
+          phase={scenePhase === 'cabin' ? 'deck' : scenePhase}
+          active={sceneActive && phase !== 'cabin'}
+          reduceMotion={reduceMotion || htmlCabinOnly}
+          weather={weather}
+          onEnterCabin={enterCabin}
+        />
+      )}
 
-      <div className="sky-divider" />
+      {!htmlCabinOnly && (
+        <CabinScene active={showCabin3d} panelOpen={panelOpen} onSelect={openPanel} />
+      )}
 
-      {/* ── ABOUT ── */}
-      <section className="section-wrap about-section" id="about">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">About</span>
-            <h2 className="section-title">Who I <span>Am</span></h2>
-            <div className="section-line" />
-          </div>
-          <div className="about-grid">
-            <ScrollReveal>
-              <div className="about-copy">
-                <p>
-                  I&apos;m a Computer Science student focused on AI automation and full-stack development.
-                  During my internship I shipped dashboard features and localization, supported content
-                  production, and ran social channels — alongside building the company landing page.
-                </p>
-                <p>
-                  I care about shipping end-to-end: reliable backends, practical product UI,
-                  and clear documentation so teammates can move fast.
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={80}>
-              <ul className="about-focus">
-                <li>
-                  <i className="fas fa-robot" />
-                  <div>
-                    <strong>AI &amp; content tooling</strong>
-                    <span>AI-assisted production workflows and social operations</span>
-                  </div>
-                </li>
-                <li>
-                  <i className="fas fa-code" />
-                  <div>
-                    <strong>Full-stack engineering</strong>
-                    <span>Node.js, TypeScript, APIs, React / Next.js, databases</span>
-                  </div>
-                </li>
-                <li>
-                  <i className="fas fa-plug" />
-                  <div>
-                    <strong>API integration</strong>
-                    <span>External services, media tooling, production workflows</span>
-                  </div>
-                </li>
-              </ul>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      <div className="sky-divider" />
-
-      {/* ── EXPERIENCE ── */}
-      <section className="section-wrap experience-section" id="experience">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Career</span>
-            <h2 className="section-title">Work <span>Experience</span></h2>
-            <div className="section-line" />
-          </div>
-          <div className="experience-list">
-            {workExperience.map((job, i) => (
-              <ScrollReveal key={job.company} delay={i * 80}>
-                <article className="experience-card">
-                  <div className="experience-top">
-                    <div>
-                      <h3 className="experience-role">{job.role}</h3>
-                      <p className="experience-company">{job.company}</p>
-                    </div>
-                    <div className="experience-meta">
-                      <span>{job.period}</span>
-                      <span>{job.location}</span>
-                    </div>
-                  </div>
-                  <ul className="experience-bullets">
-                    {job.bullets.map(bullet => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                  {job.relatedHref && (
-                    <a
-                      href={job.relatedHref}
-                      className="experience-link"
-                      {...(job.relatedHref.startsWith('http')
-                        ? { target: '_blank', rel: 'noreferrer' }
-                        : {})}
-                    >
-                      {job.relatedLabel ?? 'View related project'} <i className="fas fa-arrow-right" />
-                    </a>
-                  )}
-                </article>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="sky-divider" />
-
-      {/* ── TECH MARQUEE ── */}
-      <section className="marquee-section" aria-label="Technology stack">
-        <div className="marquee-outer">
-          {[0, 1].map(copy => (
-            <div key={copy} className="marquee-track" aria-hidden={copy === 1}>
-              {techStack.map((item, i) => (
-                <div key={`${copy}-${i}`} className="marquee-item">
-                  <i className={item.icon} />
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </div>
+      {showWeather && (
+        <div className="weather-switch" role="group" aria-label="Weather">
+          {WEATHER_OPTIONS.map(opt => (
+            <button
+              key={opt.id}
+              type="button"
+              className={weather === opt.id ? 'is-active' : undefined}
+              aria-pressed={weather === opt.id}
+              onClick={() => setWeather(opt.id)}
+            >
+              {opt.label}
+            </button>
           ))}
         </div>
-      </section>
+      )}
 
-      <div className="sky-divider" />
-
-      {/* ── MY PROJECTS ── */}
-      <section className="section-wrap" id="projects">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Selected Work</span>
-            <h2 className="section-title">Featured <span>Projects</span></h2>
-            <div className="section-line" />
+      {showHero && (
+        <header className="voyage-hero">
+          <h1 className="voyage-brand">
+            Alan <em>Luk</em>
+          </h1>
+          <p className="voyage-tagline">
+            {htmlCabinOnly
+              ? 'Computer Science student · AI & Full-stack. Open the logbook to explore projects and experience.'
+              : 'Computer Science student · AI & Full-stack. Board the pirate ship to explore the logbook.'}
+          </p>
+          {!htmlCabinOnly && <p className="voyage-hint">Drag to orbit · Scroll to zoom</p>}
+          <div className="voyage-actions">
+            {htmlCabinOnly ? (
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => openLogbook('quarters')}
+              >
+                <i className="fas fa-book-open" aria-hidden /> View logbook
+              </button>
+            ) : (
+              <>
+                <button type="button" className="btn btn-primary" onClick={goBoard}>
+                  <i className="fas fa-anchor" aria-hidden /> Board the ship
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => openLogbook('gallery')}
+                >
+                  <i className="fas fa-book-open" aria-hidden /> View logbook
+                </button>
+              </>
+            )}
           </div>
-          <ScrollReveal>
-            <ProjectSlider projects={myProjects} />
-          </ScrollReveal>
+          <p className="asset-credit">
+            Ship model:{' '}
+            <a
+              href="https://sketchfab.com/3d-models/pirate-ship-10f35a6dd2c24ac6a27330ebc3ecf356"
+              target="_blank"
+              rel="noreferrer"
+            >
+              &ldquo;Pirate_ship&rdquo;
+            </a>{' '}
+            by{' '}
+            <a href="https://sketchfab.com/Kimagure_Cookie" target="_blank" rel="noreferrer">
+              Kimagure_Cookie
+            </a>{' '}
+            ·{' '}
+            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">
+              CC BY 4.0
+            </a>
+          </p>
+        </header>
+      )}
+
+      {showDeck && (
+        <div className="cabin-hud">
+          <p className="cabin-hud-hint">
+            Hold &amp; drag to look · WASD to walk the deck · Click the glow by the bell to enter · Esc to sea
+          </p>
         </div>
-      </section>
+      )}
 
-      <div className="sky-divider" />
-
-      {/* ── OTHER PROJECTS ── */}
-      <section className="section-wrap" id="other-projects">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Additional</span>
-            <h2 className="section-title">Experience &amp; <span>Research</span></h2>
-            <div className="section-line" />
-          </div>
-          <div className="project-grid">
-            {otherProjects.map((p, i) => (
-              <ScrollReveal key={p.title} delay={i * 70}>
-                <ProjectCard {...p} />
-              </ScrollReveal>
-            ))}
-          </div>
-          <h3 className="section-subtitle-head">Certificates</h3>
-          <div className="project-grid">
-            {certificates.map((c, i) => (
-              <ScrollReveal key={c.title} delay={i * 70}>
-                <ProjectCard {...c} />
-              </ScrollReveal>
-            ))}
-          </div>
+      {showCabin3d && (
+        <div className="cabin-hud">
+          <p className="cabin-hud-hint">
+            Hold &amp; drag to look · WASD to move · Click the map glow · Esc back to deck
+          </p>
+          <p className="cabin-hud-credit">
+            Cabin:{' '}
+            <a
+              href="https://sketchfab.com/3d-models/captains-cabin-sketchfab-96056ccf72014b7eb91d4a6dbef69540"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Captains Cabin Sketchfab
+            </a>{' '}
+            by{' '}
+            <a href="https://sketchfab.com/KlGrimm" target="_blank" rel="noreferrer">
+              KlGrimm
+            </a>{' '}
+            (CC BY)
+          </p>
         </div>
-      </section>
+      )}
 
-      <div className="sky-divider" />
+      {showCabin3d && panelOpen && (
+        <CabinPanel room={room} onClose={closePanel} onRoom={setRoom} />
+      )}
 
-      {/* ── CONNECT ── */}
-      <section className="links-section" id="links">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Contact</span>
-            <h2 className="section-title">Get in <span>Touch</span></h2>
-            <div className="section-line" />
-          </div>
-          <div className="links-container">
-            {[
-              { href: 'https://www.linkedin.com/in/alan-luk-ho-lung-803ba7302/', icon: 'fab fa-linkedin', label: 'LinkedIn', sub: 'Professional profile' },
-              { href: 'https://github.com/alanluk2226', icon: 'fab fa-github', label: 'GitHub', sub: 'Source code & projects' },
-              { href: 'mailto:alanluk2226@gmail.com', icon: 'fas fa-envelope', label: 'Email', sub: 'alanluk2226@gmail.com' },
-            ].map((item, i) => (
-              <ScrollReveal key={item.label} delay={i * 60}>
-                <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="link-card">
-                  <div className="link-icon"><i className={item.icon} /></div>
-                  <h3>{item.label}</h3>
-                  <p>{item.sub}</p>
-                </a>
-              </ScrollReveal>
-            ))}
-          </div>
+      {showCabinHtml && (
+        <div id="cabin-main-skip">
+          <CabinShell
+            room={room}
+            onRoom={setRoom}
+            onBack={backToSea}
+            compact={htmlCabinOnly}
+          />
         </div>
-      </section>
-
-      {/* ── FOOTER ── */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-logo">Alan<span>Luk</span></div>
-            <ul className="footer-links">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#experience">Experience</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#links">Contact</a></li>
-            </ul>
-            <div className="copyright">
-              <p>&copy; 2026 Alan Luk</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      )}
     </div>
   )
 }

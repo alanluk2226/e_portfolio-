@@ -2,10 +2,12 @@
 import { useRef, useState, useCallback } from 'react'
 import ProjectCard from './ProjectCard'
 import { ModalImage } from './ImageModal'
+import type { ProjectCategory } from '@/app/data'
 
 interface Link { label: string; href: string }
 interface Project {
   title: string
+  category?: ProjectCategory
   tags: string[]
   images: ModalImage[]
   description: string

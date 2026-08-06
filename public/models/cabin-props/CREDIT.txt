@@ -1,0 +1,7 @@
+Kenney Furniture Kit props (CC0 1.0)
+https://kenney.nl/assets/furniture-kit
+
+Used for desk, chair, table, bookcase, lamp, cabinet inside the captain's cabin.
+Room shell (walls / floor / beams / porthole) is procedural Three.js geometry styled to match the nautical theme.
+
+Optional: drop a Sketchfab CC cabin interior as public/models/cabin.glb to replace the shell later.

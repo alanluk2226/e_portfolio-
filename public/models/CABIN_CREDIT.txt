@@ -1,0 +1,8 @@
+Captains Cabin Sketchfab
+by KlGrimm
+License: CC Attribution (CC BY)
+https://sketchfab.com/3d-models/captains-cabin-sketchfab-96056ccf72014b7eb91d4a6dbef69540
+https://sketchfab.com/KlGrimm
+
+Place the downloaded GLB here as: public/models/cabin.glb
+Prefer a smaller Autoconverted GLB if Sketchfab offers multiple sizes.

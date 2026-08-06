@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Default output works best on Vercel (standalone is for Docker/self-host)
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
 }
+
 module.exports = nextConfig

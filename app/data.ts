@@ -29,14 +29,15 @@ export const workExperience = [
   },
 ]
 
+export type ProjectCategory = 'Internship' | 'School' | 'Personal' | 'Bootcamp'
+
 export const myProjects = [
   {
     title: 'Pop Culture Auto-Post Bot',
+    category: 'Internship' as ProjectCategory,
     tags: ['Internship'],
     images: [
-      { src: '/assets/images/autopost-discord-review.png', alt: 'Internal review workflow preview' },
-      { src: '/assets/images/autopost-news-embed.png', alt: 'Generated content preview' },
-      { src: '/assets/images/autopost-shorts-preview.png', alt: 'Short-form media preview' },
+      { src: '/assets/images/discord-logo.png', alt: 'Discord — review and publishing channel (internal UI omitted)' },
     ],
     description:
       'Internship project at Starrycraze Technology Limited: an internal entertainment content automation system with AI-assisted production and human approval before publishing. Technical and operational details are confidential.',
@@ -45,6 +46,7 @@ export const myProjects = [
   },
   {
     title: 'StarryCraze Landing Page',
+    category: 'Internship' as ProjectCategory,
     tags: ['Internship', 'Three.js', 'JavaScript', 'Landing Page', 'Responsive UI'],
     images: [
       { src: '/assets/images/starrycraze-landing.png', alt: 'StarryCraze landing page with Three.js hero' },
@@ -58,6 +60,7 @@ export const myProjects = [
   },
   {
     title: 'WorkHard — Fitness Platform',
+    category: 'Personal' as ProjectCategory,
     tags: ['Node.js', 'Express', 'MongoDB', 'EJS', 'REST API', 'Render'],
     images: [
       { src: '/assets/images/workout.png', alt: 'WorkHard dashboard' },
@@ -86,6 +89,7 @@ export const myProjects = [
   },
   {
     title: 'HKschool — School Directory App',
+    category: 'School' as ProjectCategory,
     tags: ['React Native', 'Mobile', 'Group Project'],
     images: [
       { src: '/assets/images/Mobileapp1.png', alt: 'HKschool home screen' },
@@ -107,6 +111,7 @@ export const myProjects = [
   },
   {
     title: 'Course Portal — Spring Boot Web App',
+    category: 'School' as ProjectCategory,
     tags: ['Spring Boot', 'Spring Security', 'MVC', 'JSP', 'H2'],
     images: Array.from({ length: 16 }, (_, i) => ({
       src: `/assets/images/webdev${i + 1}.png`,
@@ -125,6 +130,7 @@ export const myProjects = [
 export const otherProjects = [
   {
     title: 'AI Phishing Detection Assistant',
+    category: 'Bootcamp' as ProjectCategory,
     tags: ['NVIDIA', 'HKSTP', 'AI/ML', 'Email Security', 'NLP'],
     images: [{ src: '/assets/images/Project.png', alt: 'AI phishing detection proposal overview' }],
     description:
@@ -135,6 +141,7 @@ export const otherProjects = [
   },
   {
     title: 'Android Security Lab — Controlled APK Analysis',
+    category: 'Personal' as ProjectCategory,
     tags: ['Kali Linux', 'Metasploit', 'VMware', 'Security Research'],
     images: [
       { src: '/assets/images/Attack1.png', alt: 'Security lab environment setup' },
