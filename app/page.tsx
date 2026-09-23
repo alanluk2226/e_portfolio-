@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useVoyagePhase } from './hooks/useVoyagePhase'
 import CabinShell from './components/cabin/CabinShell'
 import CabinPanel from './components/cabin/CabinPanel'
+import VoyageLoadingScreen, { useVoyageBoot } from './components/voyage/VoyageLoadingScreen'
 import {
   WEATHER_OPTIONS,
   type WeatherKind,
@@ -31,14 +32,16 @@ export default function Home() {
     openLogbook,
   } = useVoyagePhase()
 
+  const boot = useVoyageBoot()
   const [weather, setWeather] = useState<WeatherKind>('clear')
 
-  const showHero = phase === 'voyage'
-  const showDeck = phase === 'deck'
-  const showCabin3d = phase === 'cabin' && !htmlCabinOnly
-  const showCabinHtml = phase === 'cabin' && htmlCabinOnly
-  // Weather / orbit controls are desktop voyage toys
-  const showWeather = !htmlCabinOnly && (phase === 'voyage' || phase === 'deck')
+  const showHero = boot.ready && phase === 'voyage'
+  const showDeck = boot.ready && phase === 'deck'
+  const showCabin3d = boot.ready && phase === 'cabin' && !htmlCabinOnly
+  const showCabinHtml = boot.ready && phase === 'cabin' && htmlCabinOnly
+  const showWeather = boot.ready && !htmlCabinOnly && (phase === 'voyage' || phase === 'deck')
+  // Wait until boot finishes before mounting the sea canvas (avoids double-loading the ship).
+  const mountSea = boot.ready && (!htmlCabinOnly || sceneActive)
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -59,7 +62,20 @@ export default function Home() {
   }, [phase, panelOpen, closePanel, backToSea, backToDeck])
 
   return (
-    <div className={`voyage-app${htmlCabinOnly ? ' touch-ui' : ''}`}>
+    <div
+      className={`voyage-app${htmlCabinOnly ? ' touch-ui' : ''}${!boot.ready ? ' is-booting' : ''}`}
+    >
+      {!boot.ready && (
+        <VoyageLoadingScreen
+          progress={boot.progress}
+          label={boot.label}
+          fading={boot.fading}
+          error={boot.error}
+          canSkip={boot.canSkip}
+          onSkip={boot.skip}
+        />
+      )}
+
       <a
         className="skip-link"
         href="#cabin-main-skip"
@@ -71,18 +87,17 @@ export default function Home() {
         Skip to cabin content
       </a>
 
-      {/* Touch / reduced-motion: skip loading the sea canvas until they return from the logbook */}
-      {(!htmlCabinOnly || sceneActive) && (
+      {mountSea && (
         <VoyageScene
           phase={scenePhase === 'cabin' ? 'deck' : scenePhase}
-          active={sceneActive && phase !== 'cabin'}
+          active={boot.ready && sceneActive && phase !== 'cabin'}
           reduceMotion={reduceMotion || htmlCabinOnly}
           weather={weather}
           onEnterCabin={enterCabin}
         />
       )}
 
-      {!htmlCabinOnly && (
+      {boot.ready && !htmlCabinOnly && (
         <CabinScene active={showCabin3d} panelOpen={panelOpen} onSelect={openPanel} />
       )}
 
@@ -169,7 +184,8 @@ export default function Home() {
       {showDeck && (
         <div className="cabin-hud">
           <p className="cabin-hud-hint">
-            Hold &amp; drag to look · WASD to walk the deck · Click the glow by the bell to enter · Esc to sea
+            Hold &amp; drag to look · WASD to walk the deck · Click the glow by the bell to enter · Esc to
+            sea
           </p>
         </div>
       )}
