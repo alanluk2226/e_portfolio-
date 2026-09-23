@@ -19,7 +19,17 @@ export default function CabinNav({ room, onRoom, onBack, compact = false }: Prop
   return (
     <nav className={`cabin-nav${compact ? ' is-compact' : ''}`} aria-label="Cabin rooms">
       <div className="cabin-nav-brand">
-        Alan<span>Luk</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="brand-mark"
+          src="/assets/images/pirates-port-logo.jpg"
+          alt=""
+          width={36}
+          height={36}
+        />
+        <span className="cabin-nav-brand-text">
+          Alan<span>Luk</span>
+        </span>
       </div>
       <div className="cabin-nav-label">Ship log</div>
       <div className="cabin-nav-rooms" role="tablist" aria-label="Log sections">

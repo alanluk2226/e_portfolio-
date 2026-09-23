@@ -486,9 +486,30 @@ a, button, .btn { cursor: pointer; }
   font-weight: 800;
   margin-bottom: 8px;
   color: var(--parchment);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.cabin-nav-brand span { color: var(--copper-bright); }
+.cabin-nav-brand-text span { color: var(--copper-bright); }
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(212, 165, 116, 0.35);
+}
+
+.brand-mark--hero {
+  width: clamp(56px, 8vw, 72px);
+  height: clamp(56px, 8vw, 72px);
+  margin-bottom: 12px;
+  box-shadow:
+    0 0 0 2px rgba(212, 165, 116, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+}
 
 .cabin-nav-label {
   font-size: 0.7rem;

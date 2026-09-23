@@ -32,7 +32,7 @@ export const workExperience = [
 export type ProjectCategory = 'Internship' | 'School' | 'Personal' | 'Bootcamp'
 
 export const myProjects = [
-  {
+{
     title: 'Pop Culture Auto-Post Bot',
     category: 'Internship' as ProjectCategory,
     tags: ['Internship'],
@@ -44,7 +44,46 @@ export const myProjects = [
     credentials: null,
     links: [],
   },
-  {
+{
+    title: 'HK City Live',
+    category: 'Personal' as ProjectCategory,
+    tags: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'Leaflet',
+      'Gemini',
+      'OSRM',
+      'Vercel',
+    ],
+    images: [
+      { src: '/assets/images/hklive/01-home.png', alt: 'HK City Live home dashboard' },
+      { src: '/assets/images/hklive/02-bus.png', alt: 'HK City Live bus overview' },
+      { src: '/assets/images/hklive/03-bus-route.png', alt: 'HK City Live bus route with ETA' },
+      { src: '/assets/images/hklive/04-tram.png', alt: 'HK City Live tram arrivals' },
+      { src: '/assets/images/hklive/05-ferry.png', alt: 'HK City Live ferry departures' },
+      { src: '/assets/images/hklive/06-taxi.png', alt: 'HK City Live taxi stands map' },
+      { src: '/assets/images/hklive/07-light-rail.png', alt: 'HK City Live light rail ETA' },
+      { src: '/assets/images/hklive/08-light-rail-trip.png', alt: 'HK City Live light rail trip planner' },
+      { src: '/assets/images/hklive/09-mtr.png', alt: 'HK City Live MTR station ETA' },
+      { src: '/assets/images/hklive/10-mtr-trip.png', alt: 'HK City Live MTR trip assistant' },
+      { src: '/assets/images/hklive/11-medical.png', alt: 'HK City Live hospital waiting times' },
+      { src: '/assets/images/hklive/12-weather.png', alt: 'HK City Live weather snapshot' },
+      { src: '/assets/images/hklive/13-weather-forecast.png', alt: 'HK City Live 9-day forecast and radar' },
+      { src: '/assets/images/hklive/14-cctv.png', alt: 'HK City Live road CCTV' },
+      { src: '/assets/images/hklive/15-parking.png', alt: 'HK City Live parking vacancy' },
+      { src: '/assets/images/hklive/16-venues.png', alt: 'HK City Live LCSD venues' },
+      { src: '/assets/images/hklive/17-toilets.png', alt: 'HK City Live venues and toilets' },
+    ],
+    description:
+      "HK City Live is a production web app that turns Hong Kong's public open data into a practical daily dashboard. Instead of jumping between operator apps and government sites, users get transit ETAs, weather and special traffic alerts, hospital waiting times, road CCTV, parking vacancy, and leisure facilities in one place. The browser never calls upstream APIs directly — Next.js route handlers proxy and normalize everything on the server. The trip assistant uses Gemini to propose at least an MTR and a bus option for A-to-B journeys, guided by dashboard weather and alert context. Maps use Leaflet with optional Google tiles and an OSM fallback; bus/tram line shapes are computed with OSRM and cached (including Upstash Redis when configured). The product MTR view uses the official system map; a self-made schematic exists as a portfolio asset. Tech: Next.js 16, React 19, TypeScript, Tailwind CSS 4, Leaflet, OSRM, Gemini, Upstash/Vercel KV (cache), Vercel serverless (hnd1).",
+    credentials: null,
+    links: [
+      { label: 'Live Demo', href: 'https://hk-city-live.vercel.app/' },
+    ],
+  },
+{
     title: 'StarryCraze Landing Page',
     category: 'Internship' as ProjectCategory,
     tags: ['Internship', 'Three.js', 'JavaScript', 'Landing Page', 'Responsive UI'],
@@ -58,7 +97,23 @@ export const myProjects = [
       { label: 'Live Site', href: 'https://starrycraze.com/' },
     ],
   },
-  {
+{
+    title:
+      'Investigating Generative Vision AI through Diffusion Models: Image Generation and Inpainting',
+    category: 'School' as ProjectCategory,
+    tags: ['School', 'Deep Learning', 'Diffusion Models', 'In progress'],
+    images: [
+      {
+        src: '/assets/images/fyp-diffusion-cover.svg',
+        alt: 'Final Year Project cover — Generative Vision AI and Diffusion Models',
+      },
+    ],
+    description:
+      'Hong Kong Metropolitan University final year project (Sep 2026 – Present). Planned research on generative vision AI with diffusion models, focusing on image generation and inpainting. Work has not started yet — this entry will be updated as experiments, results, and demos become available.',
+    credentials: 'Status: Not started yet · Sep 2026 – Present',
+    links: [],
+  },
+{
     title: 'WorkHard — Fitness Platform',
     category: 'Personal' as ProjectCategory,
     tags: ['Node.js', 'Express', 'MongoDB', 'EJS', 'REST API', 'Render'],
@@ -87,7 +142,7 @@ export const myProjects = [
       { label: 'GitHub', href: 'https://github.com/alanluk2226/Workhard' },
     ],
   },
-  {
+{
     title: 'HKschool — School Directory App',
     category: 'School' as ProjectCategory,
     tags: ['React Native', 'Mobile', 'Group Project'],
@@ -109,7 +164,7 @@ export const myProjects = [
       { label: 'GitHub', href: 'https://github.com/alanluk2226/COMP3130_MobileAppDevelopment' },
     ],
   },
-  {
+{
     title: 'Course Portal — Spring Boot Web App',
     category: 'School' as ProjectCategory,
     tags: ['Spring Boot', 'Spring Security', 'MVC', 'JSP', 'H2'],
@@ -159,6 +214,16 @@ export const otherProjects = [
 
 export const certificates = [
   {
+    title: 'NVIDIA — Transformer Architecture',
+    tags: ['NVIDIA', 'Transformers', 'NLP'],
+    images: [{ src: '/assets/images/Nvidia2.png', alt: 'NVIDIA Transformer Architecture certificate' }],
+    description:
+      'Study of how transformers tokenize language, build contextual representations with attention, and generate sequences — useful foundation for NLP and applied AI work.',
+    links: [
+      { label: 'View Certificate', href: 'https://learn.nvidia.com/certificates?id=YjOGbXNIRNW_sCjce-pZMg' },
+    ],
+  },
+  {
     title: 'NVIDIA — Deep Learning Fundamentals',
     tags: ['NVIDIA', 'Deep Learning', 'Python'],
     images: [{ src: '/assets/images/Nvidia1.png', alt: 'NVIDIA Deep Learning certificate' }],
@@ -169,13 +234,47 @@ export const certificates = [
     ],
   },
   {
-    title: 'NVIDIA — Transformer Architecture',
-    tags: ['NVIDIA', 'Transformers', 'NLP'],
-    images: [{ src: '/assets/images/Nvidia2.png', alt: 'NVIDIA Transformer Architecture certificate' }],
-    description:
-      'Study of how transformers tokenize language, build contextual representations with attention, and generate sequences — useful foundation for NLP and applied AI work.',
-    links: [
-      { label: 'View Certificate', href: 'https://learn.nvidia.com/certificates?id=YjOGbXNIRNW_sCjce-pZMg' },
+    title: 'HYAB Youth Start-up Internship Programme 2026',
+    tags: ['HKSTP', 'HYAB', 'Internship'],
+    images: [
+      {
+        src: '/assets/images/hyab-internship-2026.jpg',
+        alt: 'HYAB Youth Start-up Internship Programme 2026 Certificate of Completion',
+      },
     ],
+    description:
+      'Certificate of Completion from Hong Kong Science and Technology Parks Corporation (HKSTP) for successfully completing the HYAB Youth Start-up Internship Programme 2026. Highly selective placement (about 43 applicants per seat). Issued 12 August 2026.',
+    links: [],
+  },
+  {
+    title: 'AWS Cloud Quest — Generative AI Practitioner',
+    tags: ['AWS', 'Generative AI', 'Machine Learning', 'Prompt Engineering'],
+    images: [
+      {
+        src: '/assets/images/aws-cloud-quest-genai.jpg',
+        alt: 'AWS Cloud Quest Generative AI Practitioner training badge',
+      },
+    ],
+    description:
+      'AWS Cloud Quest training badge for Generative AI Practitioner. Covered generative AI fundamentals, prompt engineering, and applied cloud workflows. Issued August 2026.',
+    links: [
+      {
+        label: 'View Credential',
+        href: 'https://www.credly.com/badges/3a4588a8-c6ca-4ca5-972e-ac80e908ce14',
+      },
+    ],
+  },
+  {
+    title: 'HKSTP Techathon+ 2026 Technical Hands-on Workshop',
+    tags: ['AWS', 'HKSTP', 'Cloud Computing', 'Full-Stack'],
+    images: [
+      {
+        src: '/assets/images/hkstp-techathon-workshop.jpg',
+        alt: 'HKSTP Techathon+ 2026 Technical Hands-on Workshop Certificate of Attendance',
+      },
+    ],
+    description:
+      'Certificate of Attendance for the HKSTP Techathon+ 2026 Technical Hands-on Workshop hosted with Amazon Web Services (AWS). Focused on cloud-native and full-stack skills. Issued 28 November 2025.',
+    links: [],
   },
 ]

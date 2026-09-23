@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: 'Alan Luk | Voyage Portfolio',
   description:
     'Computer Science student focused on AI automation and full-stack development. Board the ship to explore projects, experience, and contact.',
+  icons: {
+    icon: [{ url: '/assets/images/pirates-port-logo.jpg', type: 'image/jpeg' }],
+    apple: [{ url: '/assets/images/pirates-port-logo.jpg', type: 'image/jpeg' }],
+  },
 }
 
 export const viewport: Viewport = {

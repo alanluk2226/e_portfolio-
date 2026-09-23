@@ -104,6 +104,14 @@ export default function Home() {
 
       {showHero && (
         <header className="voyage-hero">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="brand-mark brand-mark--hero"
+            src="/assets/images/pirates-port-logo.jpg"
+            alt="The Pirate's Port — Alan Luk"
+            width={72}
+            height={72}
+          />
           <h1 className="voyage-brand">
             Alan <em>Luk</em>
           </h1>

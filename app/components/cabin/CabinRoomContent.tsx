@@ -127,7 +127,7 @@ export default function CabinRoomContent({ room, onRoom }: Props) {
         <p className="cabin-eyebrow">{ROOM_META.charts.eyebrow}</p>
         <h1 className="cabin-title">{ROOM_META.charts.title}</h1>
         <p className="cabin-lead">
-          Navigation charts for the tools I sail with — plus NVIDIA credentials from Talent Foundry.
+          Navigation charts for the tools I sail with — plus NVIDIA, AWS, and HKSTP credentials from Talent Foundry.
         </p>
         <div className="tech-chip-row" aria-label="Technology stack">
           {TECH.map(t => (
