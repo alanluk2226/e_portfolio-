@@ -1117,6 +1117,11 @@ a, button, .btn { cursor: pointer; }
   color: #1a120c;
 }
 
+.project-category--reference {
+  background: #9fd4d0;
+  color: #061820;
+}
+
 .project-spotlight {
   height: 100%;
   border-radius: var(--radius);

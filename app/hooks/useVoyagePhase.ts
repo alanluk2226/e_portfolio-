@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 export type VoyagePhase = 'voyage' | 'deck' | 'cabin'
-export type CabinRoom = 'quarters' | 'gallery' | 'charts' | 'contact'
+export type CabinRoom = 'quarters' | 'gallery' | 'charts' | 'letters' | 'contact'
 
 /** Phones + iPads / touch tablets — skip FPS deck/cabin, use HTML logbook. */
 function detectTouchUi(): boolean {

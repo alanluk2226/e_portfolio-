@@ -5,6 +5,7 @@ const ROOMS: { id: CabinRoom; label: string; short: string; icon: string }[] = [
   { id: 'quarters', label: "Captain's Quarters", short: 'Quarters', icon: 'fas fa-compass' },
   { id: 'gallery', label: 'Cargo Gallery', short: 'Gallery', icon: 'fas fa-boxes-stacked' },
   { id: 'charts', label: 'Chart Table', short: 'Charts', icon: 'fas fa-scroll' },
+  { id: 'letters', label: 'Shore Letters', short: 'Letters', icon: 'fas fa-envelope-open-text' },
   { id: 'contact', label: "Crow's Nest", short: 'Contact', icon: 'fas fa-envelope' },
 ]
 

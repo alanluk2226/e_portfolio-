@@ -1,7 +1,13 @@
 'use client'
 import type { CabinRoom } from '@/app/hooks/useVoyagePhase'
 import ProjectCard from '../ProjectCard'
-import { myProjects, otherProjects, certificates, workExperience } from '@/app/data'
+import {
+  myProjects,
+  otherProjects,
+  certificates,
+  workExperience,
+  referenceLetters,
+} from '@/app/data'
 
 export const TECH = [
   { icon: 'fas fa-cube', label: 'Three.js' },
@@ -18,6 +24,7 @@ export const ROOM_META: Record<CabinRoom, { eyebrow: string; title: string }> = 
   quarters: { eyebrow: "Captain's Quarters", title: 'Who I Am' },
   gallery: { eyebrow: 'Cargo Hold', title: 'Featured Projects' },
   charts: { eyebrow: 'Chart Table', title: 'Certificates & Stack' },
+  letters: { eyebrow: 'Shore Letters', title: 'Reference Letters' },
   contact: { eyebrow: "Crow's Nest", title: 'Get in Touch' },
 }
 
@@ -141,6 +148,23 @@ export default function CabinRoomContent({ room, onRoom }: Props) {
         <div className="cabin-grid">
           {certificates.map(c => (
             <ProjectCard key={c.title} {...c} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  if (room === 'letters') {
+    return (
+      <section className="cabin-room" id="cabin-letters">
+        <p className="cabin-eyebrow">{ROOM_META.letters.eyebrow}</p>
+        <h1 className="cabin-title">{ROOM_META.letters.title}</h1>
+        <p className="cabin-lead">
+          Endorsements from supervisors and mentors — preview each letter, then open the full PDF.
+        </p>
+        <div className="cabin-grid">
+          {referenceLetters.map(letter => (
+            <ProjectCard key={letter.title} {...letter} />
           ))}
         </div>
       </section>

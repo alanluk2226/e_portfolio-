@@ -29,7 +29,27 @@ export const workExperience = [
   },
 ]
 
-export type ProjectCategory = 'Internship' | 'School' | 'Personal' | 'Bootcamp'
+export type ProjectCategory = 'Internship' | 'School' | 'Personal' | 'Bootcamp' | 'Reference'
+
+export const referenceLetters = [
+  {
+    title: 'Reference Letter — Starrycraze Technology Limited',
+    category: 'Reference' as ProjectCategory,
+    tags: ['Internship', 'AI & Full-Stack', 'Tracy Wong', 'Founder'],
+    images: [
+      {
+        src: '/assets/images/reference-letter-alan-luk.png',
+        alt: 'Reference letter from Tracy Wong, Founder of Starrycraze Technology Limited',
+      },
+    ],
+    description:
+      'Letter of recommendation from Tracy Wong, Founder of Starrycraze Technology Limited, covering Alan’s AI & Full-Stack Engineer Internship (Mar 2026 – Jul 2026): Discord content automation, the starrycraze.com 3D landing page, AI analytics features, and technical documentation.',
+    credentials: 'Issued 14 October 2026 · Tracy Wong, Founder',
+    links: [
+      { label: 'View PDF', href: '/assets/documents/Reference_Letter_Alan_Luk.pdf' },
+    ],
+  },
+]
 
 export const myProjects = [
 {
