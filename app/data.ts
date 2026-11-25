@@ -89,7 +89,7 @@ export const myProjects = [
       { src: '/assets/images/discord-logo.png', alt: 'Discord — review and publishing channel (internal UI omitted)' },
     ],
     description:
-      'Internship project at Starrycraze Technology Limited: a Discord bot for entertainment content with human-in-the-loop approval before publishing. The pipeline automates video editing, dubbing, subtitles, and sourcing news / images / video, plus a virtual host layer. Drove 110K+ YouTube views and 125 subscribers organically.',
+      'Internship project at Starrycraze Technology Limited: a Discord bot for entertainment content with human-in-the-loop approval before publishing. The pipeline automates video editing, dubbing, subtitles, and sourcing news / images / video, plus a virtual host layer. Drove 110K+ YouTube views and 125 subscribers organically within 1.5 months.',
     credentials: null,
     links: [],
   },
