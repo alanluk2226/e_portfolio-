@@ -33,6 +33,29 @@ export type ProjectCategory = 'Internship' | 'School' | 'Personal' | 'Bootcamp' 
 
 export const referenceLetters = [
   {
+    title: 'Academic Reference — Dr Jimmy S. Ren (HKMU)',
+    category: 'Reference' as ProjectCategory,
+    tags: [
+      'Academic',
+      'FYP Supervisor',
+      'Diffusion Models',
+      'VAE',
+      'World’s Top 2% Scientists',
+    ],
+    images: [
+      {
+        src: '/assets/images/reference-letter-jimmy-ren.png',
+        alt: 'Academic reference letter from Dr Jimmy S. Ren, Assistant Professor at HKMU',
+      },
+    ],
+    description:
+      'Academic recommendation from Dr Jimmy S. Ren (Assistant Professor, Department of Electronic Engineering and Computer Science, Hong Kong Metropolitan University) — Final Year Project supervisor for “Investigating Generative Vision AI through Diffusion Models: Image Generation and Inpainting.” Mentorship focused on VAEs and diffusion models for image generation and inpainting (DDPMs, U-Net, PyTorch). Dr Ren is listed among the World’s Top 2% Most-Cited Scientists.',
+    credentials: 'Issued 5 November 2026 · Dr Jimmy S. Ren, Assistant Professor, HKMU',
+    links: [
+      { label: 'View PDF', href: '/assets/documents/Academic_Reference_Letter_Jimmy_S_Ren.pdf' },
+    ],
+  },
+  {
     title: 'Reference Letter — Starrycraze Technology Limited',
     category: 'Reference' as ProjectCategory,
     tags: ['Internship', 'AI & Full-Stack', 'Tracy Wong', 'Founder'],
@@ -296,5 +319,20 @@ export const certificates = [
     description:
       'Certificate of Attendance for the HKSTP Techathon+ 2026 Technical Hands-on Workshop hosted with Amazon Web Services (AWS). Focused on cloud-native and full-stack skills. Issued 28 November 2025.',
     links: [],
+  },
+  {
+    title: 'AI Application Design Award',
+    tags: ['Secondary School', 'AI', 'Merit Award'],
+    images: [
+      {
+        src: '/assets/images/ai-application-design-award.png',
+        alt: 'AI Application Design Award — Merit / excellence certificate',
+      },
+    ],
+    description:
+      'Merit award in an AI Application Design competition during secondary school.',
+    links: [
+      { label: 'View Certificate', href: '/assets/documents/AI_Application_Design_Award.pdf' },
+    ],
   },
 ]
