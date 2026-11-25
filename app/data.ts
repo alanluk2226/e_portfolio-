@@ -100,7 +100,8 @@ export const myProjects = [
       'Next.js',
       'React',
       'TypeScript',
-      'Tailwind CSS',
+      'YOLOv10',
+      'ONNX',
       'Leaflet',
       'Gemini',
       'OSRM',
@@ -108,6 +109,10 @@ export const myProjects = [
     ],
     images: [
       { src: '/assets/images/hklive/01-home.png', alt: 'HK City Live home dashboard' },
+      { src: '/assets/images/hklive/18-cctv-congestion.png', alt: 'HK City Live CCTV congestion estimation with YOLO boxes' },
+      { src: '/assets/images/hklive/19-cctv-yolo-boxes.png', alt: 'HK City Live CCTV vehicle detection green boxes' },
+      { src: '/assets/images/hklive/20-cctv-low-sample.png', alt: 'HK City Live CCTV low-sample congestion caveat' },
+      { src: '/assets/images/hklive/21-cctv-lights-estimate.png', alt: 'HK City Live CCTV likely waiting at lights estimate' },
       { src: '/assets/images/hklive/02-bus.png', alt: 'HK City Live bus overview' },
       { src: '/assets/images/hklive/03-bus-route.png', alt: 'HK City Live bus route with ETA' },
       { src: '/assets/images/hklive/04-tram.png', alt: 'HK City Live tram arrivals' },
@@ -126,7 +131,7 @@ export const myProjects = [
       { src: '/assets/images/hklive/17-toilets.png', alt: 'HK City Live venues and toilets' },
     ],
     description:
-      "HK City Live is a production web app that turns Hong Kong's public open data into a practical daily dashboard. Instead of jumping between operator apps and government sites, users get transit ETAs, weather and special traffic alerts, hospital waiting times, road CCTV, parking vacancy, and leisure facilities in one place. The browser never calls upstream APIs directly — Next.js route handlers proxy and normalize everything on the server. The trip assistant uses Gemini to propose at least an MTR and a bus option for A-to-B journeys, guided by dashboard weather and alert context. Maps use Leaflet with optional Google tiles and an OSM fallback; bus/tram line shapes are computed with OSRM and cached (including Upstash Redis when configured). The product MTR view uses the official system map; a self-made schematic exists as a portfolio asset. Tech: Next.js 16, React 19, TypeScript, Tailwind CSS 4, Leaflet, OSRM, Gemini, Upstash/Vercel KV (cache), Vercel serverless (hnd1).",
+      "HK City Live is a production web app that turns Hong Kong's public open data into a practical daily dashboard — transit ETAs, weather and traffic alerts, hospital waiting times, road CCTV, parking vacancy, and leisure facilities in one place. Upstream APIs are proxied and normalized by Next.js route handlers; Gemini proposes MTR and bus options for A-to-B trips; maps use Leaflet (Google tiles / OSM fallback) with OSRM line shapes and optional Upstash/Vercel KV cache. New: optional CCTV congestion estimation (off by default — enable from the CCTV panel). Once on, a quantized YOLOv10n ONNX model (~2.6MB) runs in-browser via onnxruntime-web (640×640) to draw green vehicle boxes and a jam %, splitting “likely waiting at lights” vs “possible incident/blockage”; fewer than 8 boxes shows a low-sample caveat. Cross-Harbour Tunnel Kowloon entrance (K107F) uses a custom driveable ROI (flyovers excluded) with a second pass on queues. Congestion uses box overlap/displacement across two frames plus density; model load failure falls back to contour analysis. Browsing CCTV alone does not download the model. Tech: Next.js 16, React 19, TypeScript, Tailwind CSS 4, Leaflet, OSRM, Gemini, YOLOv10n/ONNX Runtime Web, Upstash/Vercel KV, Vercel serverless (hnd1).",
     credentials: null,
     links: [
       { label: 'Live Demo', href: 'https://hk-city-live.vercel.app/' },
@@ -258,6 +263,28 @@ export const myProjects = [
 ]
 
 export const otherProjects = [
+  {
+    title: 'bot1 — Fly Brain Steering on a Quadruped',
+    category: 'Personal' as ProjectCategory,
+    tags: [
+      'Research',
+      'In progress',
+      'FlyWire',
+      'Neuroscience',
+      'Robotics',
+      'ESP32',
+    ],
+    images: [
+      { src: '/assets/images/bot1/robot.jpg', alt: 'Four-legged robot with ESP32 and eight servos' },
+    ],
+    description:
+      'In-progress research: run a real fruit-fly heading / steering circuit on a quadruped — computer as brain, robot as body. Neurons come from the FlyWire Codex FAFB connectome (167 cells: EPG, PEN, PEG, PFL, DNa01/02 and 1,968 synapses). The PC reads the EPG compass and keeps a smooth walk while curving until heading error falls; the ESP32 only drives eight servos. Status: in progress.',
+    credentials: 'Status: In progress',
+    links: [
+      { label: 'GitHub', href: 'https://github.com/alanluk2226/bot1' },
+      { label: 'Brain view', href: 'https://temporary-nimble-pumice-vgp2mlx.vercel.app' },
+    ],
+  },
   {
     title: 'AI Phishing Detection Assistant',
     category: 'Bootcamp' as ProjectCategory,
