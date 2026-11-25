@@ -49,7 +49,7 @@ export const TECH = TECH_GROUPS.flatMap(g =>
 export const ROOM_META: Record<CabinRoom, { eyebrow: string; title: string }> = {
   quarters: { eyebrow: "Captain's Quarters", title: 'Who I Am' },
   gallery: { eyebrow: 'Cargo Hold', title: 'Featured Projects' },
-  charts: { eyebrow: 'Chart Table', title: 'Certificates & Stack' },
+  charts: { eyebrow: 'Chart Table', title: 'Certificates' },
   letters: { eyebrow: 'Shore Letters', title: 'Reference Letters' },
   contact: { eyebrow: "Crow's Nest", title: 'Get in Touch' },
 }
@@ -93,6 +93,22 @@ export default function CabinRoomContent({ room, onRoom }: Props) {
             </div>
           </li>
         </ul>
+
+        <h2 className="cabin-subtitle">Skills</h2>
+        <div className="tech-stack" aria-label="Technology stack">
+          {TECH_GROUPS.map(group => (
+            <div key={group.title} className="tech-stack-group">
+              <h3 className="tech-stack-title">{group.title}</h3>
+              <div className="tech-chip-row">
+                {group.items.map(label => (
+                  <span key={label} className="tech-chip">
+                    {label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
 
         <h2 className="cabin-subtitle">Work Experience</h2>
         {workExperience.map(job => (
@@ -161,23 +177,8 @@ export default function CabinRoomContent({ room, onRoom }: Props) {
         <p className="cabin-eyebrow">{ROOM_META.charts.eyebrow}</p>
         <h1 className="cabin-title">{ROOM_META.charts.title}</h1>
         <p className="cabin-lead">
-          Navigation charts for the tools I sail with — plus NVIDIA, AWS, and HKSTP credentials from Talent Foundry.
+          Credentials from NVIDIA, AWS, HKSTP / HYAB, and earlier awards — charts of where the voyage has been certified.
         </p>
-        <div className="tech-stack" aria-label="Technology stack">
-          {TECH_GROUPS.map(group => (
-            <div key={group.title} className="tech-stack-group">
-              <h3 className="tech-stack-title">{group.title}</h3>
-              <div className="tech-chip-row">
-                {group.items.map(label => (
-                  <span key={label} className="tech-chip">
-                    {label}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <h2 className="cabin-subtitle">Certificates</h2>
         <div className="cabin-grid">
           {certificates.map(c => (
             <ProjectCard key={c.title} {...c} />
