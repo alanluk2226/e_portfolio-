@@ -1,15 +1,16 @@
 export const workExperience = [
   {
     company: 'Starrycraze Technology Limited',
-    role: 'AI & Full-Stack Engineer Intern',
-    period: 'Mar 2026 — Jul 2026',
-    location: 'Internship',
+    role: 'AI & Full Stack Engineer Intern (HKSTP YSIP Scheme)',
+    period: 'Mar 2026 – Jul 2026',
+    location: 'Hong Kong SAR',
+    note:
+      'Backed by CityU HK Tech 300, HKUST Entrepreneurship Center, NVIDIA Inception, ElevenLabs, AWS, Google Cloud and Microsoft for Startups.',
     bullets: [
-      'Content Automation & AI Integration: Designed and built a semi-automated Discord content bot by orchestrating 8–10 APIs, integrating LLMs, and utilizing text embeddings for automated video generation and context-aware content processing. Deployed on AWS and successfully migrated to GCP, driving 110K+ YouTube views and 120+ subscribers organically within 1.5 months.',
-      'Interactive 3D Web & UI Experience: Designed and developed an interactive 3D landing page (starrycraze.com) using Three.js and Next.js. Enhanced UI/UX with custom CSS animations and fully responsive design, ensuring smooth cross-device performance (mobile, tablet, desktop).',
-      'AI Dashboard Features & i18n: Integrated an AI Search summarization button into the analytics dashboard for instant graph insights; implemented full-stack multi-language support (i18n) across the platform (Traditional Chinese, Simplified Chinese, English).',
-      'Ad Strategy & Prompt Engineering: Applied prompt engineering techniques to craft tailored promotional copy and ad strategies for upcoming marketing campaigns.',
-      'Technical Documentation & System Architecture: Authored comprehensive technical documentation for internal system architectures and the Discord automation bot, improving developer onboarding and maintaining system maintainability.',
+      'AI Automation & Content Pipeline: Designed and deployed an automated multi-API content pipeline with LLM orchestration and TTS integration, featuring fully automatic video editing, dubbing, subtitle generation, and news/image/video asset sourcing. Implemented a Discord bot for human-in-the-loop review and approval; scaled daily video output 3× through careful rate-limit management, contributing to 110K+ YouTube views and 120+ subscribers within 1.5 months.',
+      '3D Web Development & Frontend: Built and shipped an interactive 3D landing page (starrycraze.com) using Three.js and Next.js, with custom CSS animations and fully responsive UI/UX across devices.',
+      'Full-Stack Analytics & i18n: Implemented AI-powered search graph summarization for the internal analytics dashboard and delivered full-stack multilanguage support (Traditional / Simplified Chinese + English).',
+      'System Architecture & Documentation: Authored clear technical documentation covering system architecture and automation pipelines, significantly reducing onboarding time for new developers.',
     ],
     relatedHref: '#projects',
     relatedLabel: 'View related project',

@@ -9,16 +9,42 @@ import {
   referenceLetters,
 } from '@/app/data'
 
-export const TECH = [
-  { icon: 'fas fa-cube', label: 'Three.js' },
-  { icon: 'fab fa-react', label: 'React' },
-  { icon: 'fas fa-server', label: 'Next.js' },
-  { icon: 'fab fa-js', label: 'TypeScript' },
-  { icon: 'fab fa-node-js', label: 'Node.js' },
-  { icon: 'fas fa-robot', label: 'AI APIs' },
-  { icon: 'fas fa-leaf', label: 'MongoDB' },
-  { icon: 'fab fa-git-alt', label: 'Git' },
+export const TECH_GROUPS = [
+  {
+    title: 'Languages & Frameworks',
+    items: [
+      'Python',
+      'Java',
+      'JavaScript',
+      'TypeScript',
+      'HTML',
+      'CSS',
+      'SQL',
+      'NoSQL',
+      'Next.js',
+      'Node.js',
+      'Three.js',
+      'React Native',
+    ],
+  },
+  {
+    title: 'AI / ML',
+    items: ['PyTorch', 'Machine Learning', 'Deep Learning', 'Diffusion Models', 'VAE'],
+  },
+  {
+    title: 'Cloud & Database',
+    items: ['AWS', 'GCP', 'Vercel', 'MongoDB'],
+  },
+  {
+    title: 'Tools & VM',
+    items: ['Cursor', 'Ubuntu', 'Kali Linux'],
+  },
 ]
+
+/** Flat chips kept for any legacy imports */
+export const TECH = TECH_GROUPS.flatMap(g =>
+  g.items.map(label => ({ icon: 'fas fa-circle', label }))
+)
 
 export const ROOM_META: Record<CabinRoom, { eyebrow: string; title: string }> = {
   quarters: { eyebrow: "Captain's Quarters", title: 'Who I Am' },
@@ -77,6 +103,7 @@ export default function CabinRoomContent({ room, onRoom }: Props) {
               <span>{job.period}</span>
               <span>{job.location}</span>
             </div>
+            {'note' in job && job.note && <p className="cabin-job-note">{job.note}</p>}
             <ul>
               {job.bullets.map(b => (
                 <li key={b}>{b}</li>
@@ -136,12 +163,18 @@ export default function CabinRoomContent({ room, onRoom }: Props) {
         <p className="cabin-lead">
           Navigation charts for the tools I sail with — plus NVIDIA, AWS, and HKSTP credentials from Talent Foundry.
         </p>
-        <div className="tech-chip-row" aria-label="Technology stack">
-          {TECH.map(t => (
-            <span key={t.label} className="tech-chip">
-              <i className={t.icon} aria-hidden />
-              {t.label}
-            </span>
+        <div className="tech-stack" aria-label="Technology stack">
+          {TECH_GROUPS.map(group => (
+            <div key={group.title} className="tech-stack-group">
+              <h3 className="tech-stack-title">{group.title}</h3>
+              <div className="tech-chip-row">
+                {group.items.map(label => (
+                  <span key={label} className="tech-chip">
+                    {label}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
         <h2 className="cabin-subtitle">Certificates</h2>
