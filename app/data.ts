@@ -140,6 +140,32 @@ export const myProjects = [
       { label: 'Live Site', href: 'https://starrycraze.com/' },
     ],
   },
+  {
+    title: 'Cantonese–English Whisper with LoRA',
+    category: 'School' as ProjectCategory,
+    tags: [
+      'School',
+      'Whisper',
+      'LoRA',
+      'Speech Recognition',
+      'PyTorch',
+      'LLM Post-edit',
+    ],
+    images: [
+      { src: '/assets/images/whisper-lora/01-mer.png', alt: 'DeepSeek MER results on 1,215 test sentences' },
+      { src: '/assets/images/whisper-lora/02-examples-a.png', alt: 'Whisper vs LoRA vs LLM rewrite examples A' },
+      { src: '/assets/images/whisper-lora/03-examples-b.png', alt: 'Whisper vs LoRA vs LLM rewrite examples B' },
+      { src: '/assets/images/whisper-lora/04-example-926.png', alt: 'Example transcript comparison — sentence 926' },
+      { src: '/assets/images/whisper-lora/05-example-290.png', alt: 'Example transcript comparison — sentence 290' },
+    ],
+    description:
+      'COMP 4330SEF experiment: freeze openai/whisper-small and train a LoRA adapter on the Mixed Cantonese and English (MCE) dataset for mixed-language transcription (decode with language=zh). On a held-out test set cleaned of simplified-character references (1,215 utterances), MER drops from 43.48% (baseline Whisper-small) to 15.90% with LoRA + a fixed topic prompt (~0.73% trainable params, 3.85 GB peak VRAM, 16.8 min on RTX 4070). Optional LLM rewrite of LoRA drafts further reaches 13.95% MER with DeepSeek (Qwen rewrite: 18.22%) — LLMs only edit text, they do not hear audio.',
+    credentials: null,
+    links: [
+      { label: 'GitHub', href: 'https://github.com/alanluk2226/4330_Whisper_LoRA_LLM' },
+      { label: 'Demo', href: 'https://quick-lyra-lt9n889.tmp.now' },
+    ],
+  },
 {
     title:
       'Investigating Generative Vision AI through Diffusion Models: Image Generation and Inpainting',
